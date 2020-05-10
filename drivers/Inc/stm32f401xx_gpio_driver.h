@@ -87,7 +87,7 @@ typedef struct
  * @GPIO_PIN_PU_PD
  * GPIO pin pull up AND pull down configuration macros
  */
-#define GPIO_NO_PUPD   			0	/* No pull up/down pin */
+#define GPIO_NO_PUPD   			0	/* Non pull up/down pin */
 #define GPIO_PIN_PU				1	/* Pull-up pin */
 #define GPIO_PIN_PD				2   /* Pull-down pin */
 

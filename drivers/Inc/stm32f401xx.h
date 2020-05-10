@@ -12,6 +12,31 @@
 
 #define __vo volatile
 
+/**********************************START:Processor Specific Details **********************************
+ *
+ * ARM Cortex Mx Processor NVIC ISERx register Addresses
+ */
+#define NVIC_ISER0          ((__vo uint32_t*)0xE000E100)
+#define NVIC_ISER1          ((__vo uint32_t*)0xE000E104)
+#define NVIC_ISER2          ((__vo uint32_t*)0xE000E108)
+#define NVIC_ISER3          ((__vo uint32_t*)0xE000E10C)
+
+/*
+ * ARM Cortex Mx Processor NVIC ICERx register Addresses
+ */
+#define NVIC_ICER0 			((__vo uint32_t*)0XE000E180)
+#define NVIC_ICER1			((__vo uint32_t*)0XE000E184)
+#define NVIC_ICER2  		((__vo uint32_t*)0XE000E188)
+#define NVIC_ICER3			((__vo uint32_t*)0XE000E18C)
+
+/*
+ * ARM Cortex Mx Processor Priority Register Address Calculation
+ */
+#define NVIC_PR_BASE_ADDR 	((__vo uint32_t*)0xE000E400)
+
+#define NO_PR_BITS_IMPLEMENTED		4 	/* The number of priority bits implemented is specific to the microcontroller;
+ 	 	 	 	 	 	 	 	 	 	   In ST's case is actually 4. For instance, in TI's microcontroller, this value is 3.*/
+
 /*
  * Base addresses of Flash and SRAM memory
  */
@@ -130,21 +155,21 @@ typedef struct
   __vo uint32_t SSCGR;         /* RCC spread spectrum clock generation register,    			Address offset: 0x80 */
   __vo uint32_t PLLI2SCFGR;    /* RCC PLLI2S configuration register,    						Address offset: 0x84 */
   uint32_t      RESERVED7;     /* Reserved, 0x88    																 */
-  __vo uint32_t DCKCFGR;       /* RCC Dedicated Clocks Configuration Register    				Address offset: 0x8C */
+  __vo uint32_t DCKCFGR;       /* RCC Dedicated Clocks Configuration Register					Address offset: 0x8C */
 
-} RCC_RegDef_t;
+}RCC_RegDef_t;
 
 /*
  * peripheral register definition structure for EXTI
  */
 typedef struct
 {
-	__vo uint32_t IMR;    /*         	  	    Address offset: 0x00 */
-	__vo uint32_t EMR;    /*            		Address offset: 0x04 */
-	__vo uint32_t RTSR;   /* 				    Address offset: 0x08 */
-	__vo uint32_t FTSR;   /*					Address offset: 0x0C */
-	__vo uint32_t SWIER;  /* 				    Address offset: 0x10 */
-	__vo uint32_t PR;     /*                   	Address offset: 0x14 */
+	__vo uint32_t IMR;    /* Interrupt mask register,						Address offset: 0x00 */
+	__vo uint32_t EMR;    /* Event mask register,           				Address offset: 0x04 */
+	__vo uint32_t RTSR;   /* Rising trigger selection register,				Address offset: 0x08 */
+	__vo uint32_t FTSR;   /* Falling trigger selection register,			Address offset: 0x0C */
+	__vo uint32_t SWIER;  /* Software interrupt event register,				Address offset: 0x10 */
+	__vo uint32_t PR;     /* Pending register,                  			Address offset: 0x14 */
 
 }EXTI_RegDef_t;
 
@@ -153,13 +178,12 @@ typedef struct
  */
 typedef struct
 {
-	__vo uint32_t MEMRMP;       /*                   Address offset: 0x00      */
-	__vo uint32_t PMC;          /*					 Address offset: 0x04      */
-	__vo uint32_t EXTICR[4];    /*					 Address offset: 0x08-0x14 */
-	uint32_t      RESERVED1[2];  /*					 Reserved, 0x18-0x1C    	*/
-	__vo uint32_t CMPCR;        /*	   			     Address offset: 0x20      */
-	uint32_t      RESERVED2[2];  /*                Reserved, 0x24-0x28 	    */
-	__vo uint32_t CFGR;         /*           Address offset: 0x2C   	*/
+	__vo uint32_t MEMRMP;       	/* SYSCFG memory remap register,                   				Address offset: 0x00      */
+	__vo uint32_t PMC;         		/* SYSCFG peripheral mode configuration register,				Address offset: 0x04      */
+	__vo uint32_t EXTICR[4];    	/* SYSCFG external interrupt configuration register 1...4,		Address offset: 0x08-0x14 */
+	uint32_t      RESERVED1[2]; 	/* Reserved, 0x18-0x1C    																  */
+	__vo uint32_t CMPCR;        	/* Compensation cell control register,	   			     		Address offset: 0x20      */
+	uint32_t      RESERVED2[2]; 	/* Reserved, 0x24-0x28 	    															  */
 } SYSCFG_RegDef_t;
 
 /*
@@ -174,8 +198,8 @@ typedef struct
 #define GPIOH		((GPIO_RegDef_t*) GPIOH_BASEADDR)			/* Base address typecasted to GPIO_RegDef_t port H */
 
 #define RCC			((RCC_RegDef_t*) RCC_BASEADDR)				/* Base address typecasted to RCC_RegDef_t */
-#define EXTI		((EXTI_RegDef_t*) EXTI_BASEADDR)
-#define SYSCFG		((SYSCFG_RegDef_t*) SYSCFG_BASEADDR)
+#define EXTI		((EXTI_RegDef_t*) EXTI_BASEADDR)			/* Base address typecasted to EXTI_RegDef_t */
+#define SYSCFG		((SYSCFG_RegDef_t*) SYSCFG_BASEADDR)		/* Base address typecasted to SYSCFG_RegDef_t */
 
 /*
  * Clock Enable Macros for GPIOx peripherals
@@ -216,7 +240,7 @@ typedef struct
 #define GPIOH_REG_RESET()       do{ (RCC->AHB1RSTR |= (1 << 7)); (RCC->AHB1RSTR &= ~(1 << 7)); }while(0)
 
 /*
- * This macro returns a code( between 0 to 7) for a given GPIO base address(x)
+ * This macro returns a code(between 0 to 7) for a given GPIO base address(x)
  */
 #define GPIO_BASEADDR_TO_CODE(x)      ( (x == GPIOA) ? 0 :\
 										(x == GPIOB) ? 1 :\
@@ -224,6 +248,39 @@ typedef struct
 										(x == GPIOD) ? 3 :\
 								        (x == GPIOE) ? 4 :\
 								        (x == GPIOH) ? 7 :0 )
+
+/*
+ * IRQ(Interrupt Request) Numbers of STM32F401xx MCU
+ * NOTE: update these macros with valid values according to your MCU
+ * TODO: You may complete this list for other peripherals
+ */
+#define IRQ_NO_EXTI0 			6
+#define IRQ_NO_EXTI1 			7
+#define IRQ_NO_EXTI2 			8
+#define IRQ_NO_EXTI3 			9
+#define IRQ_NO_EXTI4 			10
+#define IRQ_NO_EXTI9_5 			23
+#define IRQ_NO_EXTI15_10 		40
+
+/*
+ * macros for all the possible priority levels
+ */
+#define NVIC_IRQ_PRIO0			0
+#define NVIC_IRQ_PRIO1			1
+#define NVIC_IRQ_PRIO2			2
+#define NVIC_IRQ_PRIO3			3
+#define NVIC_IRQ_PRIO4			4
+#define NVIC_IRQ_PRIO5			5
+#define NVIC_IRQ_PRIO6			6
+#define NVIC_IRQ_PRIO7			7
+#define NVIC_IRQ_PRIO8			8
+#define NVIC_IRQ_PRIO9			9
+#define NVIC_IRQ_PRIO10			10
+#define NVIC_IRQ_PRIO11			11
+#define NVIC_IRQ_PRIO12			12
+#define NVIC_IRQ_PRIO13			13
+#define NVIC_IRQ_PRIO14			14
+#define NVIC_IRQ_PRIO15			15
 
 /*
  * Clock Enable Macros for USARTx peripherals
