@@ -132,7 +132,8 @@ int main(void){
  800021e:	b086      	sub	sp, #24
  8000220:	af00      	add	r7, sp, #0
 
-	GPIO_Handle_t GpioLed, GpioBut;
+	// memset(&GpioLed,0,sizeof(GpioLed));
+	// memset(&GPIOBtn,0,sizeof(GpioBut));
 
 	/* LED config */
 	GpioLed.pGPIOx = GPIOA;
@@ -667,7 +668,8 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 		}
 
 		//2. Configure the GPIO port selection in SYSCFG_EXTICR
-		SYSCFG_PCLK_EN();
+
+		SYSCFG_PCLK_EN();	// Enable the SYSCFG clock
  800051e:	4b1d      	ldr	r3, [pc, #116]	; (8000594 <GPIO_Init+0x174>)
  8000520:	6c5b      	ldr	r3, [r3, #68]	; 0x44
  8000522:	4a1c      	ldr	r2, [pc, #112]	; (8000594 <GPIO_Init+0x174>)
@@ -770,7 +772,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
  80005f4:	3302      	adds	r3, #2
  80005f6:	f841 2023 	str.w	r2, [r1, r3, lsl #2]
 
-		//3 . enable the EXTI interrupt delivery using IMR
+		//3 . Enable the EXTI interrupt delivery to the processor using IMR
 		EXTI->IMR |= 1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber;
  80005fa:	4b57      	ldr	r3, [pc, #348]	; (8000758 <GPIO_Init+0x338>)
  80005fc:	681b      	ldr	r3, [r3, #0]
@@ -1004,10 +1006,10 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
 	...
 
 08000788 <GPIO_IRQInterruptConfig>:
+ * @return            - none
  *
- * @return            -
- *
- * @Note              -
+ * @Note              - Only 81 IRQ numbers are actually implemented on the microcontroller.
+ * 						There are a total of 240 interruptions.
  */
 void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
  8000788:	b480      	push	{r7}
@@ -1023,7 +1025,8 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
  8000798:	79bb      	ldrb	r3, [r7, #6]
  800079a:	2b01      	cmp	r3, #1
  800079c:	d133      	bne.n	8000806 <GPIO_IRQInterruptConfig+0x7e>
-		if(IRQNumber <= 31){
+
+		if(IRQNumber <= 31){							/* IRQ numbers(range): 0, ... , 31 */
  800079e:	79fb      	ldrb	r3, [r7, #7]
  80007a0:	2b1f      	cmp	r3, #31
  80007a2:	d80a      	bhi.n	80007ba <GPIO_IRQInterruptConfig+0x32>
@@ -1038,14 +1041,14 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
  80007b2:	4a32      	ldr	r2, [pc, #200]	; (800087c <GPIO_IRQInterruptConfig+0xf4>)
  80007b4:	430b      	orrs	r3, r1
  80007b6:	6013      	str	r3, [r2, #0]
-		} else if(IRQNumber >= 64 && IRQNumber < 96){
+		} else if(IRQNumber >= 64 && IRQNumber < 96){	/* IRQ numbers(range): 64, ... , 95 */
 			//program ICER2 register
 			*NVIC_ICER2 |= (1 << IRQNumber % 64);
 		}
 	}
 }
  80007b8:	e059      	b.n	800086e <GPIO_IRQInterruptConfig+0xe6>
-		} else if(IRQNumber > 31 && IRQNumber < 64){
+		} else if(IRQNumber > 31 && IRQNumber < 64){	/* IRQ numbers(range): 32, ... , 63 */
  80007ba:	79fb      	ldrb	r3, [r7, #7]
  80007bc:	2b1f      	cmp	r3, #31
  80007be:	d90f      	bls.n	80007e0 <GPIO_IRQInterruptConfig+0x58>
@@ -1064,7 +1067,7 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
  80007da:	430b      	orrs	r3, r1
  80007dc:	6013      	str	r3, [r2, #0]
  80007de:	e046      	b.n	800086e <GPIO_IRQInterruptConfig+0xe6>
-		} else if(IRQNumber >= 64 && IRQNumber < 96){
+		} else if(IRQNumber >= 64 && IRQNumber < 96){	/* IRQ numbers(range): 64, ... , 95 */
  80007e0:	79fb      	ldrb	r3, [r7, #7]
  80007e2:	2b3f      	cmp	r3, #63	; 0x3f
  80007e4:	d943      	bls.n	800086e <GPIO_IRQInterruptConfig+0xe6>
@@ -1084,7 +1087,7 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
  8000802:	6013      	str	r3, [r2, #0]
 }
  8000804:	e033      	b.n	800086e <GPIO_IRQInterruptConfig+0xe6>
-		if(IRQNumber <= 31){
+		if(IRQNumber <= 31){							/* IRQ numbers(range): 0, ... , 31 */
  8000806:	79fb      	ldrb	r3, [r7, #7]
  8000808:	2b1f      	cmp	r3, #31
  800080a:	d80a      	bhi.n	8000822 <GPIO_IRQInterruptConfig+0x9a>
@@ -1100,7 +1103,7 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
  800081e:	6013      	str	r3, [r2, #0]
 }
  8000820:	e025      	b.n	800086e <GPIO_IRQInterruptConfig+0xe6>
-		} else if(IRQNumber > 31 && IRQNumber < 64){
+		} else if(IRQNumber > 31 && IRQNumber < 64){	/* IRQ numbers(range): 32, ... , 63 */
  8000822:	79fb      	ldrb	r3, [r7, #7]
  8000824:	2b1f      	cmp	r3, #31
  8000826:	d90f      	bls.n	8000848 <GPIO_IRQInterruptConfig+0xc0>
@@ -1119,7 +1122,7 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
  8000842:	430b      	orrs	r3, r1
  8000844:	6013      	str	r3, [r2, #0]
  8000846:	e012      	b.n	800086e <GPIO_IRQInterruptConfig+0xe6>
-		} else if(IRQNumber >= 64 && IRQNumber < 96){
+		} else if(IRQNumber >= 64 && IRQNumber < 96){	/* IRQ numbers(range): 64, ... , 95 */
  8000848:	79fb      	ldrb	r3, [r7, #7]
  800084a:	2b3f      	cmp	r3, #63	; 0x3f
  800084c:	d90f      	bls.n	800086e <GPIO_IRQInterruptConfig+0xe6>
@@ -1154,9 +1157,9 @@ void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
 
 08000894 <GPIO_IRQPriorityConfig>:
  *
- * @return            -
+ * @return            - none
  *
- * @Note              -
+ * @Note              - none
  */
 void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority){
  8000894:	b480      	push	{r7}
@@ -1176,7 +1179,7 @@ void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority){
  80008a8:	f003 0303 	and.w	r3, r3, #3
  80008ac:	73bb      	strb	r3, [r7, #14]
 
-	uint8_t shift_amount = (8 * iprx_section) + (8 - NO_PR_BITS_IMPLEMENTED);
+	uint8_t shift_amount = (8 * iprx_section) + (8 - NO_PR_BITS_IMPLEMENTED); //only 4 bits are available
  80008ae:	7bbb      	ldrb	r3, [r7, #14]
  80008b0:	00db      	lsls	r3, r3, #3
  80008b2:	b2db      	uxtb	r3, r3
@@ -1208,9 +1211,9 @@ void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority){
 
 080008e8 <GPIO_IRQHandling>:
  *
- * @return            -
+ * @return            - none
  *
- * @Note              -
+ * @Note              - none
  */
 void GPIO_IRQHandling(uint8_t PinNumber){
  80008e8:	b480      	push	{r7}

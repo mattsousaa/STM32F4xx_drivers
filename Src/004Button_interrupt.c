@@ -23,6 +23,9 @@ int main(void){
 
 	GPIO_Handle_t GpioLed, GpioBut;
 
+	// memset(&GpioLed,0,sizeof(GpioLed));
+	// memset(&GpioBut,0,sizeof(GpioBut));
+
 	/* LED config */
 	GpioLed.pGPIOx = GPIOA;
 	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;

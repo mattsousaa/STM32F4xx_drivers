@@ -16,18 +16,18 @@
  *
  * ARM Cortex Mx Processor NVIC ISERx register Addresses
  */
-#define NVIC_ISER0          ((__vo uint32_t*)0xE000E100)
-#define NVIC_ISER1          ((__vo uint32_t*)0xE000E104)
-#define NVIC_ISER2          ((__vo uint32_t*)0xE000E108)
-#define NVIC_ISER3          ((__vo uint32_t*)0xE000E10C)
+#define NVIC_ISER0          ((__vo uint32_t*)0xE000E100)		/* Base address of Interrupt Set-enable Register 0 */
+#define NVIC_ISER1          ((__vo uint32_t*)0xE000E104)		/* Base address of Interrupt Set-enable Register 1 */
+#define NVIC_ISER2          ((__vo uint32_t*)0xE000E108)		/* Base address of Interrupt Set-enable Register 2 */
+#define NVIC_ISER3          ((__vo uint32_t*)0xE000E10C)		/* Base address of Interrupt Set-enable Register 3 */
 
 /*
  * ARM Cortex Mx Processor NVIC ICERx register Addresses
  */
-#define NVIC_ICER0 			((__vo uint32_t*)0XE000E180)
-#define NVIC_ICER1			((__vo uint32_t*)0XE000E184)
-#define NVIC_ICER2  		((__vo uint32_t*)0XE000E188)
-#define NVIC_ICER3			((__vo uint32_t*)0XE000E18C)
+#define NVIC_ICER0 			((__vo uint32_t*)0XE000E180)		/* Base address of Interrupt Clear-enable Register 0 */
+#define NVIC_ICER1			((__vo uint32_t*)0XE000E184)		/* Base address of Interrupt Clear-enable Register 1 */
+#define NVIC_ICER2  		((__vo uint32_t*)0XE000E188)		/* Base address of Interrupt Clear-enable Register 2 */
+#define NVIC_ICER3			((__vo uint32_t*)0XE000E18C)		/* Base address of Interrupt Clear-enable Register 3 */
 
 /*
  * ARM Cortex Mx Processor Priority Register Address Calculation
@@ -265,7 +265,7 @@ typedef struct
 /*
  * macros for all the possible priority levels
  */
-#define NVIC_IRQ_PRIO0			0
+#define NVIC_IRQ_PRIO0			0			/* Highest priority */
 #define NVIC_IRQ_PRIO1			1
 #define NVIC_IRQ_PRIO2			2
 #define NVIC_IRQ_PRIO3			3
@@ -280,7 +280,7 @@ typedef struct
 #define NVIC_IRQ_PRIO12			12
 #define NVIC_IRQ_PRIO13			13
 #define NVIC_IRQ_PRIO14			14
-#define NVIC_IRQ_PRIO15			15
+#define NVIC_IRQ_PRIO15			15			/* Lowest priority */
 
 /*
  * Clock Enable Macros for USARTx peripherals
