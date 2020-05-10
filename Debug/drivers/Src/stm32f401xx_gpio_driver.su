@@ -1,8 +1,8 @@
 stm32f401xx_gpio_driver.c:23:6:GPIO_PeriClockControl	16	static
-stm32f401xx_gpio_driver.c:69:6:GPIO_Init	24	static
-stm32f401xx_gpio_driver.c:134:6:GPIO_DeInit	16	static
-stm32f401xx_gpio_driver.c:164:9:GPIO_ReadFromInputPin	24	static
-stm32f401xx_gpio_driver.c:187:10:GPIO_ReadFromInputPort	24	static
-stm32f401xx_gpio_driver.c:208:6:GPIO_WriteToOutputPin	16	static
-stm32f401xx_gpio_driver.c:233:6:GPIO_WriteToOutputPort	16	static
-stm32f401xx_gpio_driver.c:250:6:GPIO_ToggleOutputPin	16	static
+stm32f401xx_gpio_driver.c:69:6:GPIO_Init	32	static
+stm32f401xx_gpio_driver.c:163:6:GPIO_DeInit	16	static
+stm32f401xx_gpio_driver.c:193:9:GPIO_ReadFromInputPin	24	static
+stm32f401xx_gpio_driver.c:216:10:GPIO_ReadFromInputPort	24	static
+stm32f401xx_gpio_driver.c:237:6:GPIO_WriteToOutputPin	16	static
+stm32f401xx_gpio_driver.c:262:6:GPIO_WriteToOutputPort	16	static
+stm32f401xx_gpio_driver.c:279:6:GPIO_ToggleOutputPin	16	static
