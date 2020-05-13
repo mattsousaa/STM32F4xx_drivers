@@ -6,6 +6,7 @@
  */
 
 #include "stm32f401xx_spi_driver.h"
+#include "stm32f401xx_gpio_driver.h"
 
 /*********************************************************************
  * @fn      		  - SPI_PeriClockControl
@@ -155,7 +156,7 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx){
 void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 
 	while(Len > 0){
-		//1. Wait until TXE is set
+		//1. Wait until TXE is set/empty
 		while(SPI_GetFlagStatus(pSPIx, SPI_TXE_FLAG) == FLAG_RESET);
 
 		//2. check the DFF bit in CR1
@@ -171,5 +172,49 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 			Len--;			// Decrement 1 byte
 			pTxBuffer++;	// Increment the adress pointer to the next data
 		}
+	}
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_PeripheralControl
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+ */
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
+
+	if(EnOrDi == ENABLE){
+		pSPIx->CR1 |= (1 << SPI_CR1_SPE);
+	} else{
+		pSPIx->CR1 &= ~(1 << SPI_CR1_SPE);
+	}
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_SSIConfig
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+ */
+void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
+
+	if(EnOrDi == ENABLE){
+		pSPIx->CR1 |=  (1 << SPI_CR1_SSI);
+	} else{
+		pSPIx->CR1 &=  ~(1 << SPI_CR1_SSI);
 	}
 }
