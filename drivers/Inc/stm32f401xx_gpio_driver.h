@@ -15,12 +15,12 @@
  */
 typedef struct
 {
-	uint8_t GPIO_PinNumber;			/* GPIO number 				< possible values from @GPIO_PIN_NUMBERS >  */
-	uint8_t GPIO_PinMode;			/* GPIO mode 				< possible values from @GPIO_PIN_MODES >    */
-	uint8_t GPIO_PinSpeed;			/* GPIO speed 				< possible values from @GPIO_PIN_SPEED >    */
-	uint8_t GPIO_PinPuPdControl;	/* GPIO Pull up/down 		< possible values from @GPIO_PIN_PU_PD >    */
-	uint8_t GPIO_PinOPType;			/* GPIO output type  		< possible values from @GPIO_PIN_PP_OD >    */
-	uint8_t GPIO_PinAltFunMode;		/* GPIO function mode 		< possible values from @GPIO_PIN_AF_MODES > */
+	uint8_t GPIO_PinNumber;			/* GPIO number, 			< possible values from @GPIO_PIN_NUMBERS >  */
+	uint8_t GPIO_PinMode;			/* GPIO mode, 				< possible values from @GPIO_PIN_MODES >    */
+	uint8_t GPIO_PinSpeed;			/* GPIO speed, 				< possible values from @GPIO_PIN_SPEED >    */
+	uint8_t GPIO_PinPuPdControl;	/* GPIO Pull up/down, 		< possible values from @GPIO_PIN_PU_PD >    */
+	uint8_t GPIO_PinOPType;			/* GPIO output type,  		< possible values from @GPIO_PIN_PP_OD >    */
+	uint8_t GPIO_PinAltFunMode;		/* GPIO function mode, 		< possible values from @GPIO_PIN_AF_MODES > */
 }GPIO_PinConfig_t;
 
 

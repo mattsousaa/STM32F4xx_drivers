@@ -1,3 +1,4 @@
 "Src/004Button_interrupt.o"
 "Startup/startup_stm32f401retx.o"
 "drivers/Src/stm32f401xx_gpio_driver.o"
+"drivers/Src/stm32f401xx_spi_driver.o"

@@ -68,8 +68,47 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0xef drivers/Src/stm32f401xx_gpio_driver.o
  .debug_macro   0x0000000000000000       0x6a drivers/Src/stm32f401xx_gpio_driver.o
  .debug_macro   0x0000000000000000      0x1df drivers/Src/stm32f401xx_gpio_driver.o
- .debug_macro   0x0000000000000000      0x325 drivers/Src/stm32f401xx_gpio_driver.o
+ .debug_macro   0x0000000000000000      0x413 drivers/Src/stm32f401xx_gpio_driver.o
  .debug_macro   0x0000000000000000      0x124 drivers/Src/stm32f401xx_gpio_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .group         0x0000000000000000        0xc drivers/Src/stm32f401xx_spi_driver.o
+ .text          0x0000000000000000        0x0 drivers/Src/stm32f401xx_spi_driver.o
+ .data          0x0000000000000000        0x0 drivers/Src/stm32f401xx_spi_driver.o
+ .bss           0x0000000000000000        0x0 drivers/Src/stm32f401xx_spi_driver.o
+ .text.SPI_PeriClockControl
+                0x0000000000000000       0xe0 drivers/Src/stm32f401xx_spi_driver.o
+ .text.SPI_Init
+                0x0000000000000000       0xae drivers/Src/stm32f401xx_spi_driver.o
+ .text.SPI_DeInit
+                0x0000000000000000       0x80 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_info    0x0000000000000000      0x3c2 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_abbrev  0x0000000000000000       0xd7 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_aranges
+                0x0000000000000000       0x30 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_ranges  0x0000000000000000       0x20 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000       0x81 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000      0xa60 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000       0x22 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000       0x8e drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000       0x51 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000       0xef drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000       0x6a drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000      0x1df drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000      0x413 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_macro   0x0000000000000000       0x82 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_line    0x0000000000000000      0x482 drivers/Src/stm32f401xx_spi_driver.o
+ .debug_str     0x0000000000000000     0x5436 drivers/Src/stm32f401xx_spi_driver.o
+ .comment       0x0000000000000000       0x7c drivers/Src/stm32f401xx_spi_driver.o
+ .debug_frame   0x0000000000000000       0x88 drivers/Src/stm32f401xx_spi_driver.o
+ .ARM.attributes
+                0x0000000000000000       0x39 drivers/Src/stm32f401xx_spi_driver.o
  .text          0x0000000000000000        0x0 c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-exit.o)
  .data          0x0000000000000000        0x0 c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-exit.o)
  .bss           0x0000000000000000        0x0 c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a(lib_a-exit.o)
@@ -130,6 +169,7 @@ LOAD c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
 LOAD Src/004Button_interrupt.o
 LOAD Startup/startup_stm32f401retx.o
 LOAD drivers/Src/stm32f401xx_gpio_driver.o
+LOAD drivers/Src/stm32f401xx_spi_driver.o
 START GROUP
 LOAD c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libc_nano.a
 LOAD c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv4-sp/hard\libm.a
@@ -399,7 +439,7 @@ OUTPUT(STM32F4xx_drivers.elf elf32-littlearm)
  .debug_ranges  0x0000000000000020       0x20 Startup/startup_stm32f401retx.o
  .debug_ranges  0x0000000000000040       0x60 drivers/Src/stm32f401xx_gpio_driver.o
 
-.debug_macro    0x0000000000000000     0x13e8
+.debug_macro    0x0000000000000000     0x14d6
  .debug_macro   0x0000000000000000       0x85 Src/004Button_interrupt.o
  .debug_macro   0x0000000000000085      0xa60 Src/004Button_interrupt.o
  .debug_macro   0x0000000000000ae5       0x22 Src/004Button_interrupt.o
@@ -408,22 +448,22 @@ OUTPUT(STM32F4xx_drivers.elf elf32-littlearm)
  .debug_macro   0x0000000000000be6       0xef Src/004Button_interrupt.o
  .debug_macro   0x0000000000000cd5       0x6a Src/004Button_interrupt.o
  .debug_macro   0x0000000000000d3f      0x1df Src/004Button_interrupt.o
- .debug_macro   0x0000000000000f1e      0x325 Src/004Button_interrupt.o
- .debug_macro   0x0000000000001243      0x124 Src/004Button_interrupt.o
- .debug_macro   0x0000000000001367       0x81 drivers/Src/stm32f401xx_gpio_driver.o
+ .debug_macro   0x0000000000000f1e      0x413 Src/004Button_interrupt.o
+ .debug_macro   0x0000000000001331      0x124 Src/004Button_interrupt.o
+ .debug_macro   0x0000000000001455       0x81 drivers/Src/stm32f401xx_gpio_driver.o
 
 .debug_line     0x0000000000000000      0xac5
  .debug_line    0x0000000000000000      0x453 Src/004Button_interrupt.o
  .debug_line    0x0000000000000453       0x84 Startup/startup_stm32f401retx.o
  .debug_line    0x00000000000004d7      0x5ee drivers/Src/stm32f401xx_gpio_driver.o
 
-.debug_str      0x0000000000000000     0x5337
- .debug_str     0x0000000000000000     0x5058 Src/004Button_interrupt.o
-                                       0x51c4 (size before relaxing)
- .debug_str     0x0000000000005058       0x31 Startup/startup_stm32f401retx.o
+.debug_str      0x0000000000000000     0x559c
+ .debug_str     0x0000000000000000     0x52bd Src/004Button_interrupt.o
+                                       0x5429 (size before relaxing)
+ .debug_str     0x00000000000052bd       0x31 Startup/startup_stm32f401retx.o
                                          0x7f (size before relaxing)
- .debug_str     0x0000000000005089      0x2ae drivers/Src/stm32f401xx_gpio_driver.o
-                                       0x543d (size before relaxing)
+ .debug_str     0x00000000000052ee      0x2ae drivers/Src/stm32f401xx_gpio_driver.o
+                                       0x56a2 (size before relaxing)
 
 .comment        0x0000000000000000       0x7b
  .comment       0x0000000000000000       0x7b Src/004Button_interrupt.o

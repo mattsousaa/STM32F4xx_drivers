@@ -156,7 +156,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
  *
  * @brief             - This function deinitializes the GPIO ports.
  *
- * @param[in]         - Base address of the gpio peripheral.
+ * @param[in]         - Base address of the GPIO peripheral.
  * @param[in]         -
  * @param[in]         -
  *
