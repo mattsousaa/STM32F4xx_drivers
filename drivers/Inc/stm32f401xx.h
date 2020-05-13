@@ -370,6 +370,8 @@ typedef struct
 #define RESET				DISABLE
 #define GPIO_PIN_SET		SET
 #define GPIO_PIN_RESET		RESET
+#define FLAG_SET			SET
+#define FLAG_RESET			RESET
 
 /******************************************************************************************
  *Bit position definitions of SPI peripheral
@@ -402,7 +404,6 @@ typedef struct
 #define SPI_CR2_ERRIE					 5
 #define SPI_CR2_RXNEIE				 	 6
 #define SPI_CR2_TXEIE					 7
-
 
 /*
  * Bit position definitions SPI_SR

@@ -103,6 +103,15 @@ void SPI_Init(SPI_Handle_t *pSPIHandle){
 
 }
 
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx , uint32_t FlagName){
+
+	if(pSPIx->SR & FlagName){
+		return FLAG_SET;
+	}
+
+	return FLAG_RESET;
+}
+
 /*********************************************************************
  * @fn      		  - SPI_DeInit
  *
@@ -126,5 +135,41 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx){
 		SPI3_PCLK_DI();
 	} else if(pSPIx == SPI4){
 		SPI4_PCLK_DI();
+	}
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_SendData
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              - This is actually a blocking API call;
+ * 					  -	The function will wait until all the bytes are transmitted.
+ */
+void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
+
+	while(Len > 0){
+		//1. Wait until TXE is set
+		while(SPI_GetFlagStatus(pSPIx, SPI_TXE_FLAG) == FLAG_RESET);
+
+		//2. check the DFF bit in CR1
+		if((pSPIx->CR1 & (1 << SPI_CR1_DFF))){
+			//16 bit DFF
+			pSPIx->DR = *((uint16_t*)pTxBuffer);	// Dereferencing to load the data and typecasting uint8_t to uint16_t
+			Len--;	// Decrement 1 byte
+			Len--;	// Decrement 2 bytes
+			(uint16_t*)pTxBuffer++;	// Increment the adress pointer to the next data
+		} else{
+			//8 bit DFF
+			pSPIx->DR = *pTxBuffer;
+			Len--;			// Decrement 1 byte
+			pTxBuffer++;	// Increment the adress pointer to the next data
+		}
 	}
 }
