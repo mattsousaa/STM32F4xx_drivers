@@ -40,11 +40,11 @@ void SPI1_GPIOInits(void){
 
 	/* For this application we don't want to use MISO and NSS because there is no slave */
 	//MISO
-	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
+	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
 	//GPIO_Init(&SPIPins);
 
 	//NSS
-	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_4;
 	//GPIO_Init(&SPIPins);
 }
 
@@ -68,25 +68,26 @@ int main(void){
 
 	char user_data[] = "Hello world";
 
+	// Init clock SPI1
 	SPI_PeriClockControl(SPI1, ENABLE);
 
-	// This function is used to initialize the GPIO pins to behave as SPI2 pins
+	// This function is used to initialize the GPIO pins to behave as SPI1 pins
 	SPI1_GPIOInits();
 
-	// This function is used to initialize the SPI2 peripheral parameters
+	// This function is used to initialize the SPI1 peripheral parameters
 	SPI1_Inits();
 
 	//this makes NSS signal internally high and avoids MODF error
-	SPI_SSIConfig(SPI1,ENABLE);
+	SPI_SSIConfig(SPI1, ENABLE);
 
-	// Enable the SPI2 peripheral after have done all register configurations
+	// Enable the SPI1 peripheral after have done all register configurations
 	SPI_PeripheralControl(SPI1, ENABLE);
 
 	while(1){
 		// Send data
 		SPI_SendData(SPI1, (uint8_t*)user_data, strlen(user_data));
 
-		//Disable the SPI2 peripheral
+		// Disable the SPI1 peripheral
 		SPI_PeripheralControl(SPI1, DISABLE);
 	}
 

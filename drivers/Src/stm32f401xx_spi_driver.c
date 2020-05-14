@@ -104,6 +104,19 @@ void SPI_Init(SPI_Handle_t *pSPIHandle){
 
 }
 
+/*********************************************************************
+ * @fn      		  - SPI_GetFlagStatus
+ *
+ * @brief             - This function verifies the state of any flag register.
+ *
+ * @param[in]         - Base address of the SPI peripheral;
+ * @param[in]         - Flag name in SR register.
+ * @param[in]         -
+ *
+ * @return            -	Flag status (SET or RESET)
+ *
+ * @Note              - none
+ */
 uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx , uint32_t FlagName){
 
 	if(pSPIx->SR & FlagName){
@@ -142,16 +155,17 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx){
 /*********************************************************************
  * @fn      		  - SPI_SendData
  *
- * @brief             -
+ * @brief             - This function sends data through the Tx buffer.
  *
- * @param[in]         -
- * @param[in]         -
- * @param[in]         -
+ * @param[in]         - Base address of the SPI peripheral;
+ * @param[in]         - Tx buffer (pointer);
+ * @param[in]         - Lenght of Tx buffer.
  *
- * @return            -
+ * @return            - none
  *
  * @Note              - This is actually a blocking API call;
- * 					  -	The function will wait until all the bytes are transmitted.
+ * 					  -	The function will wait until all the bytes are transmitted;
+ * 					  - The Tx buffer is only acessible through the Data Register (DR).
  */
 void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 
@@ -178,15 +192,15 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 /*********************************************************************
  * @fn      		  - SPI_PeripheralControl
  *
- * @brief             -
+ * @brief             - This function enables the SPI peripheral to work properly after register configuration.
  *
- * @param[in]         -
- * @param[in]         -
+ * @param[in]         - Base address of the SPI peripheral;
+ * @param[in]         - Enable or Disable macro.
  * @param[in]         -
  *
- * @return            -
+ * @return            - none
  *
- * @Note              -
+ * @Note              - none
  */
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
 
@@ -200,15 +214,21 @@ void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
 /*********************************************************************
  * @fn      		  - SPI_SSIConfig
  *
- * @brief             -
+ * @brief             - Master mode fault occurs when the master device has its NSS pin pulled to low (in NSS hardware mode)
+ * 						or SSI bit low (in NSS software mode), this automatically sets the MODF bit;
+ * 					  - When the SSM is enabled, for master, the NSS signal should be tied to +VCC when not used to avoid
+ * 					  	MODF error which happens in multi master communication;
+ * 					  - This function make SSI=1 to tie NSS to +VCC internally. SSI bit influences NSS state when SSM=1;
+ * 					  - By default SSI=0, so NSS will be pulled to low which is not acceptable for master when working in
+ * 					    non multi master situation.
  *
- * @param[in]         -
- * @param[in]         -
+ * @param[in]         - Base address of the SPI peripheral;
+ * @param[in]         - Enable or Disable macro.
  * @param[in]         -
  *
- * @return            -
+ * @return            - none
  *
- * @Note              -
+ * @Note              - none
  */
 void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
 

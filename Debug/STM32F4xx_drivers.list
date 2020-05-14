@@ -142,7 +142,7 @@ void SPI1_GPIOInits(void){
 	//GPIO_Init(&SPIPins);
 
 	//NSS
-	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_4;
 	//GPIO_Init(&SPIPins);
 }
  8000222:	bf00      	nop
@@ -211,26 +211,27 @@ int main(void){
  8000276:	ca07      	ldmia	r2, {r0, r1, r2}
  8000278:	e883 0007 	stmia.w	r3, {r0, r1, r2}
 
+	// Init clock SPI1
 	SPI_PeriClockControl(SPI1, ENABLE);
  800027c:	2101      	movs	r1, #1
  800027e:	4810      	ldr	r0, [pc, #64]	; (80002c0 <main+0x54>)
  8000280:	f000 fa88 	bl	8000794 <SPI_PeriClockControl>
 
-	// This function is used to initialize the GPIO pins to behave as SPI2 pins
+	// This function is used to initialize the GPIO pins to behave as SPI1 pins
 	SPI1_GPIOInits();
  8000284:	f7ff ffae 	bl	80001e4 <SPI1_GPIOInits>
 
-	// This function is used to initialize the SPI2 peripheral parameters
+	// This function is used to initialize the SPI1 peripheral parameters
 	SPI1_Inits();
  8000288:	f7ff ffd2 	bl	8000230 <SPI1_Inits>
 
 	//this makes NSS signal internally high and avoids MODF error
-	SPI_SSIConfig(SPI1,ENABLE);
+	SPI_SSIConfig(SPI1, ENABLE);
  800028c:	2101      	movs	r1, #1
  800028e:	480c      	ldr	r0, [pc, #48]	; (80002c0 <main+0x54>)
  8000290:	f000 fbad 	bl	80009ee <SPI_SSIConfig>
 
-	// Enable the SPI2 peripheral after have done all register configurations
+	// Enable the SPI1 peripheral after have done all register configurations
 	SPI_PeripheralControl(SPI1, ENABLE);
  8000294:	2101      	movs	r1, #1
  8000296:	480a      	ldr	r0, [pc, #40]	; (80002c0 <main+0x54>)
@@ -248,7 +249,7 @@ int main(void){
  80002aa:	4805      	ldr	r0, [pc, #20]	; (80002c0 <main+0x54>)
  80002ac:	f000 fb4d 	bl	800094a <SPI_SendData>
 
-		//Disable the SPI2 peripheral
+		// Disable the SPI1 peripheral
 		SPI_PeripheralControl(SPI1, DISABLE);
  80002b0:	2100      	movs	r1, #0
  80002b2:	4803      	ldr	r0, [pc, #12]	; (80002c0 <main+0x54>)
@@ -1300,7 +1301,11 @@ void SPI_Init(SPI_Handle_t *pSPIHandle){
  8000920:	4770      	bx	lr
 
 08000922 <SPI_GetFlagStatus>:
-
+ *
+ * @return            -	Flag status (SET or RESET)
+ *
+ * @Note              - none
+ */
 uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx , uint32_t FlagName){
  8000922:	b480      	push	{r7}
  8000924:	b083      	sub	sp, #12
@@ -1330,10 +1335,10 @@ uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx , uint32_t FlagName){
  8000948:	4770      	bx	lr
 
 0800094a <SPI_SendData>:
- * @return            -
  *
  * @Note              - This is actually a blocking API call;
- * 					  -	The function will wait until all the bytes are transmitted.
+ * 					  -	The function will wait until all the bytes are transmitted;
+ * 					  - The Tx buffer is only acessible through the Data Register (DR).
  */
 void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
  800094a:	b580      	push	{r7, lr}
@@ -1412,9 +1417,9 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 
 080009b6 <SPI_PeripheralControl>:
  *
- * @return            -
+ * @return            - none
  *
- * @Note              -
+ * @Note              - none
  */
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
  80009b6:	b480      	push	{r7}
@@ -1454,9 +1459,9 @@ void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
 
 080009ee <SPI_SSIConfig>:
  *
- * @return            -
+ * @return            - none
  *
- * @Note              -
+ * @Note              - none
  */
 void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
  80009ee:	b480      	push	{r7}
