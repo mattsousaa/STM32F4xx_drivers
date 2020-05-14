@@ -104,7 +104,7 @@ void SPI1_GPIOInits(void){
 	SPIPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
  80001ee:	2302      	movs	r3, #2
  80001f0:	727b      	strb	r3, [r7, #9]
-	SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = 5;
+	SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = AF5;
  80001f2:	2305      	movs	r3, #5
  80001f4:	737b      	strb	r3, [r7, #13]
 	SPIPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
@@ -117,6 +117,7 @@ void SPI1_GPIOInits(void){
  80001fe:	2302      	movs	r3, #2
  8000200:	72bb      	strb	r3, [r7, #10]
 
+	/* Enabling GPIOA peripheral */
 	GPIO_PeriClockControl(GPIOA, ENABLE);
  8000202:	2101      	movs	r1, #1
  8000204:	4809      	ldr	r0, [pc, #36]	; (800022c <SPI1_GPIOInits+0x48>)
@@ -211,7 +212,7 @@ int main(void){
  8000276:	ca07      	ldmia	r2, {r0, r1, r2}
  8000278:	e883 0007 	stmia.w	r3, {r0, r1, r2}
 
-	// Init clock SPI1
+	/* Enabling SPI1 peripheral */
 	SPI_PeriClockControl(SPI1, ENABLE);
  800027c:	2101      	movs	r1, #1
  800027e:	4810      	ldr	r0, [pc, #64]	; (80002c0 <main+0x54>)
