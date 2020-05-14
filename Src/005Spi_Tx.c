@@ -28,6 +28,7 @@ void SPI1_GPIOInits(void){
 	SPIPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 	SPIPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
+	/* Enabling GPIOA peripheral */
 	GPIO_PeriClockControl(GPIOA, ENABLE);
 
 	//SCLK
@@ -68,7 +69,7 @@ int main(void){
 
 	char user_data[] = "Hello world";
 
-	// Init clock SPI1
+	/* Enabling SPI1 peripheral */
 	SPI_PeriClockControl(SPI1, ENABLE);
 
 	// This function is used to initialize the GPIO pins to behave as SPI1 pins
