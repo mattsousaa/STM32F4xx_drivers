@@ -1,4 +1,0 @@
-006spi_tx_only_avr.c:20:6:delay	16	static
-006spi_tx_only_avr.c:24:6:SPI1_GPIOInits	24	static
-006spi_tx_only_avr.c:56:6:SPI1_Inits	24	static
-006spi_tx_only_avr.c:72:5:main	136	static
