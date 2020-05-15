@@ -1,4 +1,4 @@
-"Src/005Spi_Tx.o"
+"Src/006spi_tx_only_avr.o"
 "Startup/startup_stm32f401retx.o"
 "drivers/Src/stm32f401xx_gpio_driver.o"
 "drivers/Src/stm32f401xx_spi_driver.o"

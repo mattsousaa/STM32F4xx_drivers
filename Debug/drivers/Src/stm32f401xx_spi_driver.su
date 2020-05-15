@@ -5,3 +5,4 @@ stm32f401xx_spi_driver.c:142:6:SPI_DeInit	16	static
 stm32f401xx_spi_driver.c:170:6:SPI_SendData	24	static
 stm32f401xx_spi_driver.c:205:6:SPI_PeripheralControl	16	static
 stm32f401xx_spi_driver.c:233:6:SPI_SSIConfig	16	static
+stm32f401xx_spi_driver.c:255:6:SPI_SSOEConfig	16	static
