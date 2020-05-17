@@ -297,7 +297,7 @@ void GPIO_ToggleOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
  *
  * @return            - none
  *
- * @Note              - Only 81 IRQ numbers are actually implemented on the microcontroller.
+ * @Note              - Only 91 IRQ numbers are actually implemented on the microcontroller.
  * 						There are a total of 240 interruptions.
  */
 void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){

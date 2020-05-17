@@ -1,0 +1,6 @@
+008Spi_IRQ_avr.c:22:6:delay	16	static
+008Spi_IRQ_avr.c:26:6:SPI1_IRQHandler	8	static
+008Spi_IRQ_avr.c:31:6:SPI_ApplicationEventCallback	16	static
+008Spi_IRQ_avr.c:35:6:SPI1_GPIOInits	24	static
+008Spi_IRQ_avr.c:67:6:SPI1_Inits	40	static
+008Spi_IRQ_avr.c:83:5:main	24	static
