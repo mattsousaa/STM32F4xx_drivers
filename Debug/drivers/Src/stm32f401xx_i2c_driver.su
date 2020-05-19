@@ -1,0 +1,2 @@
+stm32f401xx_i2c_driver.c:23:6:I2C_PeriClockControl	16	static
+stm32f401xx_i2c_driver.c:57:6:I2C_PeripheralControl	16	static

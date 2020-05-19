@@ -154,6 +154,7 @@ uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx , uint32_t FlagName){
 	return FLAG_RESET;
 }
 
+
 /*****************************************************************************************
  * @fn      		  - SPI_SendData
  *
@@ -161,7 +162,7 @@ uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx , uint32_t FlagName){
  *
  * @param[in]         - Base address of the SPI peripheral
  * @param[in]         - Tx buffer
- * @param[in]         - Lenght of Tx buffer
+ * @param[in]         - Len of Tx buffer
  *
  * @return            - none
  *
@@ -170,9 +171,9 @@ uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx , uint32_t FlagName){
  * 					  - The Tx buffer is only acessible through the Data Register (DR).
  *
  *****************************************************************************************/
-void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Lenght){
+void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 
-	while(Lenght > 0){
+	while(Len > 0){
 		/* 1. Wait until TXE is set/empty */
 
 		while(SPI_GetFlagStatus(pSPIx, SPI_TXE_FLAG) == (uint8_t)FLAG_RESET);
@@ -183,14 +184,14 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Lenght){
 			/* Load data into data register */
 			/* 16 bit DFF */
 			pSPIx->DR = *((uint16_t*)pTxBuffer);	/* Dereferencing to load the data and typecasting uint8_t to uint16_t */
-			Lenght--;								/* Decrement 1 byte */
-			Lenght--;								/* Decrement 2 bytes */
+			Len--;									/* Decrement 1 byte */
+			Len--;									/* Decrement 2 bytes */
 			(uint16_t*)pTxBuffer++;					/* Increment the adress pointer to the next data */
 		} else{
 
 			/* 8 bit DFF */
 			pSPIx->DR = *(pTxBuffer);
-			Lenght--;						/* Decrement 1 byte */
+			Len--;							/* Decrement 1 byte */
 			pTxBuffer++;					/* Increment the adress pointer to the next data */
 		}
 	}
@@ -236,7 +237,7 @@ void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len){
 	}
 }
 
-/*****************************************************************
+/*********************************************************************************
  * @fn			- SPI_SendDataIT
  *
  * @brief		- This function sends data over SPI peripheral in Interrupt mode
@@ -249,7 +250,7 @@ void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len){
  *
  * @Note		- None
  *
- *****************************************************************/
+ *********************************************************************************/
 uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pTxBuffer, uint32_t Length){
 
 	uint8_t state = pSPIHandle->TxState;
@@ -268,7 +269,7 @@ uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pTxBuffer, uint32_t Le
 		pSPIHandle->pSPIx->CR2 |= (1 << SPI_CR2_TXEIE);
 
 	}
-	/* DBG->Data transmission*/
+
 	return state;
 }
 
@@ -292,14 +293,14 @@ uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t
 
 	if(state != SPI_BUSY_IN_RX){
 
-		/* Save Rx buffer address and length information in global variables */
+		/*1. Save Rx buffer address and length information in global variables */
 		pSPIHandle->pRxBuffer = pRxBuffer;
 		pSPIHandle->RxLen = Length;
 
-		/* Mark SPI state as busy so that no other code can take over SPI peripheral until transmission is over */
+		/*2. Mark SPI state as busy so that no other code can take over SPI peripheral until transmission is over */
 		pSPIHandle->RxState = SPI_BUSY_IN_RX;
 
-		/* Enable RXNEIE control bit to get interrupt whenever RXE flag is set in SR */
+		/*3. Enable RXNEIE control bit to get interrupt whenever RXE flag is set in SR */
 		pSPIHandle->pSPIx->CR2 |= (1 << SPI_CR2_RXNEIE);
 	}
 

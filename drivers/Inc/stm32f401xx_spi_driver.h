@@ -130,22 +130,19 @@ typedef struct
 void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
 
 /*
- * Init and De-Init
+ * Init and De-init
  */
 void SPI_Init(SPI_Handle_t *pSPIHandle);
 void SPI_DeInit(SPI_RegDef_t *pSPIx);
 
 /*
- * Data send and receive
+ * Data Send and Receive
  */
-void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Length);
+void SPI_SendData(SPI_RegDef_t *pSPIx,uint8_t *pTxBuffer, uint32_t Len);
 void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len);
 
-/*
- * Data send and receive in Interrupt mode
- */
-uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pTxBuffer, uint32_t Length);
-uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t Length);
+uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle,uint8_t *pTxBuffer, uint32_t Len);
+uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t Len);
 
 /*
  * IRQ Configuration and ISR handling
@@ -155,19 +152,20 @@ void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
 void SPI_IRQHandling(SPI_Handle_t *pHandle);
 
 /*
- * Other peripheral APIs
+ * Other Peripheral Control APIs
  */
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t FlagName);
-void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
-void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
-void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
 void SPI_ClearOVRFlag(SPI_RegDef_t *pSPIx);
-void SPI_CloseTransmission(SPI_Handle_t *pSPIHandle);
+void SPI_CloseTransmisson(SPI_Handle_t *pSPIHandle);
 void SPI_CloseReception(SPI_Handle_t *pSPIHandle);
+uint8_t I2C_DeviceMode(I2C_RegDef_t *I2Cx);
 
 /*
  * Application callback
  */
-void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle, uint8_t AppEvent);
+void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle,uint8_t AppEv);
 
 #endif /* INC_STM32F401XX_SPI_DRIVER_H_ */

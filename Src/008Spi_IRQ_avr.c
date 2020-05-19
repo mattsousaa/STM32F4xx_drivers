@@ -238,7 +238,7 @@ int main(void){
 		/* End of CMD Sensor Read */
 
 		/* Confirm SPI2 not busy */
-		SPI_GetFlagStatus(SPI2, SPI_SR_BSY);
+		while(SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
 
 		/* Disable SPI2 peripheral */
 		SPI_PeripheralControl(SPI2, DISABLE);
