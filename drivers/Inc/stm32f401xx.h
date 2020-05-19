@@ -26,10 +26,10 @@
 /*
  * ARM Cortex Mx Processor NVIC ICERx register Addresses
  */
-#define NVIC_ICER0 			((__vo uint32_t*)0XE000E180)		/* Base address of Interrupt Clear-enable Register 0 */
-#define NVIC_ICER1			((__vo uint32_t*)0XE000E184)		/* Base address of Interrupt Clear-enable Register 1 */
-#define NVIC_ICER2  		((__vo uint32_t*)0XE000E188)		/* Base address of Interrupt Clear-enable Register 2 */
-#define NVIC_ICER3			((__vo uint32_t*)0XE000E18C)		/* Base address of Interrupt Clear-enable Register 3 */
+#define NVIC_ICER0 			((__vo uint32_t*)0xE000E180)		/* Base address of Interrupt Clear-enable Register 0 */
+#define NVIC_ICER1			((__vo uint32_t*)0xE000E184)		/* Base address of Interrupt Clear-enable Register 1 */
+#define NVIC_ICER2  		((__vo uint32_t*)0xE000E188)		/* Base address of Interrupt Clear-enable Register 2 */
+#define NVIC_ICER3			((__vo uint32_t*)0xE000E18C)		/* Base address of Interrupt Clear-enable Register 3 */
 
 /*
  * ARM Cortex Mx Processor Priority Register Address Calculation

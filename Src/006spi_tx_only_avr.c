@@ -10,134 +10,127 @@
 #include "stm32f401xx_spi_driver.h"
 
 /*
- * PA6 --> SPI1_MISO
- * PA7 --> SPI1_MOSI
- * PA5 --> SPI1_SCLK
- * PA4 --> SPI1_NSS
- * ALT function mode: 5
- * */
+ * Alternate functionality
+ *
+ * PB15 --> SPI2_MOSI
+ * PB14 --> SPI2_MISO
+ * PB13 --> SPI2_SLCK
+ * PB12 --> SPI2_NSS
+ * ALT function mode: AF5
+ */
 
-void delay(void){
-	for(uint32_t i = 0; i < 400000/2; i++);
-}
 
-void SPI1_GPIOInits(void){
+void SPI2_GPIOInits(void){
 
 	GPIO_Handle_t SPIPins;
 
-	SPIPins.pGPIOx = GPIOA;
+	SPIPins.pGPIOx = GPIOB;
 	SPIPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
-	SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = AF5;
+	SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = 5;
 	SPIPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	SPIPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+	SPIPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
 	SPIPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
-	/* Enabling GPIOA peripheral */
-	GPIO_PeriClockControl(GPIOA, ENABLE);
+	GPIO_PeriClockControl(GPIOB, ENABLE);
 
-	//SCLK
-	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_5;
+	/* SCLK Init */
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
 	GPIO_Init(&SPIPins);
 
-	//MOSI
-	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
+	/* MOSI Init */
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_15;
 	GPIO_Init(&SPIPins);
 
-	/* For this application we don't want to use MISO because the master don't receives data */
-	//MISO
-	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
+	/* MISO Init */
+	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
 	//GPIO_Init(&SPIPins);
 
-	//NSS
-	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_4;
+	/* NSS Init */
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
 	GPIO_Init(&SPIPins);
+
 }
 
-void SPI1_Inits(void){
+void SPI2_Inits(void){
 
-	SPI_Handle_t SPI1handle;
+	SPI_Handle_t SPI2Handle;
 
-	SPI1handle.pSPIx = SPI1;
-	SPI1handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
-	SPI1handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
-	SPI1handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV8; //generates sclk of 2MHz
-	SPI1handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
-	SPI1handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
-	SPI1handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
-	SPI1handle.SPIConfig.SPI_SSM = SPI_SSM_DI; // Hardware slave management enabled enabled for NSS pin
+	SPI2Handle.pSPIx = SPI2;
+	SPI2Handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
+	SPI2Handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
+	SPI2Handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV8; //2MHz
+	SPI2Handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
+	SPI2Handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
+	SPI2Handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
+	SPI2Handle.SPIConfig.SPI_SSM = SPI_SSM_DI; //HW Slave management enabled for NSS pin
 
-	SPI_Init(&SPI1handle);
+	SPI_PeriClockControl(SPI2, ENABLE);
+
+	SPI_Init(&SPI2Handle);
+
+}
+
+void GPIO_ButtonInit(void){
+
+	GPIO_Handle_t GpioBtn;
+
+	GpioBtn.pGPIOx = GPIOC;
+	GpioBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+	GpioBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+	GpioBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GpioBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_PeriClockControl(GPIOC, ENABLE);
+
+	GPIO_Init(&GpioBtn);
+}
+
+void delay(void){
+	for(uint32_t i = 0; i < 500000/2; i++);
 }
 
 int main(void){
 
-	char user_data[] = "An Arduino Uno board is best suited for beginners who have just started using microcontrollers";
-	GPIO_Handle_t GpioLed, GpioBut;
+	char user_data[] = "Test! Hello from STM324F401RE.";
 
-	/* LED config */
-	GpioLed.pGPIOx = GPIOA;
-	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
-	GpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	GpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_LOW;
-	GpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+	/* Initialize button */
+	GPIO_ButtonInit();
 
-	/* BUTTON config */
-	GpioBut.pGPIOx = GPIOB;
-	GpioBut.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
-	GpioBut.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
-	GpioBut.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_LOW;
-	GpioBut.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+	/* Initialize GPIO pins to behave as SPI2 pins */
+	SPI2_GPIOInits();
 
-	GPIO_PeriClockControl(GPIOA, ENABLE);
-	GPIO_PeriClockControl(GPIOB, ENABLE);
-
-	GPIO_Init(&GpioLed);
-	GPIO_Init(&GpioBut);
-
-	/* Enabling SPI1 peripheral */
-	SPI_PeriClockControl(SPI1, ENABLE);
-
-	// This function is used to initialize the GPIO pins to behave as SPI1 pins
-	SPI1_GPIOInits();
-
-	// This function is used to initialize the SPI1 peripheral parameters
-	SPI1_Inits();
+	/* Initialize SPI2 peripheral parameters */
+	SPI2_Inits();
 
 	/*
-	* Making SSOE 1 does NSS output enable.
+	* making SSOE 1 does NSS output enable.
 	* The NSS pin is automatically managed by the hardware.
 	* i.e when SPE=1 , NSS will be pulled to low
 	* and NSS pin will be high when SPE=0
 	*/
-	SPI_SSOEConfig(SPI1, ENABLE);
+	SPI_SSOEConfig(SPI2,ENABLE);
 
 	while(1){
 
-		//wait till button is pressed
-		while(GPIO_ReadFromInputPin(GPIOB,GPIO_PIN_NO_12));
+		/* Wait till button is pressed */
+		while(GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_NO_13));
 
-		//to avoid button de-bouncing related issues 200ms of delay
 		delay();
 
-		// Enable the SPI1 peripheral after have done all register configurations
-		SPI_PeripheralControl(SPI1, ENABLE);
+		/* Enable SPI2 peripheral */
+		SPI_PeripheralControl(SPI2, ENABLE);
 
-		GPIO_ToggleOutputPin(GPIOA, GPIO_PIN_NO_14);
-
-		//first send length information
 		uint8_t dataLen = strlen(user_data);
-		SPI_SendData(SPI1, &dataLen, 1);
+		SPI_SendData(SPI2, &dataLen, 1);
 
 		// Send data
-		SPI_SendData(SPI1, (uint8_t*)user_data, strlen(user_data));
+		SPI_SendData(SPI2, (uint8_t*)user_data, strlen(user_data));
 
-		//lets confirm SPI is not busy
-		while(SPI_GetFlagStatus(SPI1, SPI_BUSY_FLAG));
+		/* Confirm SPI2 not busy */
+		while(SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
 
-		// Disable the SPI1 peripheral
-		SPI_PeripheralControl(SPI1, DISABLE);
+		/* Disable SPI2 peripheral */
+		SPI_PeripheralControl(SPI2, DISABLE);
+
 	}
 }
-
-

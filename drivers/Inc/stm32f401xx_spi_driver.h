@@ -128,7 +128,6 @@ typedef struct
  * Peripheral Clock setup
  */
 void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
-void teste(void);
 
 /*
  * Init and De-Init
@@ -140,7 +139,7 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx);
  * Data send and receive
  */
 void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Length);
-void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Length);
+void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len);
 
 /*
  * Data send and receive in Interrupt mode

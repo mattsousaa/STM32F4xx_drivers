@@ -1,5 +1,5 @@
 /*
- * 006spi_tx_only_avr.c
+ * 008spi_IRQ_avr.c
  *
  *  Created on: 14 de mai de 2020
  *      Author: Mateus Sousa
@@ -10,136 +10,241 @@
 #include "stm32f401xx_spi_driver.h"
 
 /*
- * PA6 --> SPI1_MISO
- * PA7 --> SPI1_MOSI
- * PA5 --> SPI1_SCLK
- * PA4 --> SPI1_NSS
- * ALT function mode: 5
- * */
+ * Alternate functionality
+ *
+ * PB15 --> SPI2_MOSI
+ * PB14 --> SPI2_MISO
+ * PB13 --> SPI2_SLCK
+ * PB12 --> SPI2_NSS
+ * ALT function mode: AF5
+ */
 
-SPI_Handle_t SPI1Handle;
+/* Command codes */
+#define COMMAND_LED_CTRL		0x50
+#define COMMAND_SENSOR_READ		0x51
+#define COMMAND_LED_READ		0x52
+#define COMMAND_PRINT			0x53
+#define COMMAND_ID_READ			0x54
 
-void delay(void){
-	for(uint32_t i = 0; i < 50000/2; i++);
+#define LED_ON					1
+#define LED_OFF					0
+
+/* Analog pins */
+#define ANALOG_PIN0				0
+#define ANALOG_PIN1				1
+#define ANALOG_PIN2				2
+#define ANALOG_PIN3				3
+#define ANALOG_PIN4				4
+
+/* Arduino LED */
+#define LED_PIN					9
+
+
+SPI_Handle_t SPI2Handle;
+
+uint8_t dummyWrite = 0xFF;
+uint8_t dummyRead;
+
+void SPI2_IRQHandler(void){
+	SPI_IRQHandling(&SPI2Handle);
 }
 
-void SPI1_IRQHandler(void){
-	SPI_IRQHandling(&SPI1Handle);
-
-}
 
 void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle,uint8_t AppEv){
-
+	if(AppEv == SPI_EVENT_TX_CMPLT){
+		//printf("Tx is complete!\n");
+	} else if(AppEv == SPI_EVENT_RX_CMPLT){
+		//printf("Rx is complete!\n");
+	} else if(AppEv == SPI_EVENT_OVR_ERR){
+		//printf("OVR Error triggered!\n");
+	}
 }
 
-void SPI1_GPIOInits(void){
+void SPI2_GPIOInits(void){
 
 	GPIO_Handle_t SPIPins;
 
-	SPIPins.pGPIOx = GPIOA;
+	SPIPins.pGPIOx = GPIOB;
 	SPIPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
-	SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = AF5;
+	SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = 5;
 	SPIPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	SPIPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+	SPIPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
 	SPIPins.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
-
-	/* Enabling GPIOA peripheral */
-	GPIO_PeriClockControl(GPIOA, ENABLE);
-
-	//SCLK
-	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_5;
-	GPIO_Init(&SPIPins);
-
-	//MOSI
-	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
-	GPIO_Init(&SPIPins);
-
-	/* For this application we don't want to use MISO because the master don't receives data */
-	//MISO
-	//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
-	//GPIO_Init(&SPIPins);
-
-	//NSS
-	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_4;
-	GPIO_Init(&SPIPins);
-}
-
-void SPI1_Inits(void){
-
-	SPI_Handle_t SPI1handle;
-
-	SPI1handle.pSPIx = SPI1;
-	SPI1handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
-	SPI1handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
-	SPI1handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV8; //generates sclk of 2MHz
-	SPI1handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
-	SPI1handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
-	SPI1handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
-	SPI1handle.SPIConfig.SPI_SSM = SPI_SSM_DI; // Hardware slave management enabled enabled for NSS pin
-
-	SPI_Init(&SPI1handle);
-}
-
-int main(void){
-
-	uint8_t data = 0x50;
-	GPIO_Handle_t GpioBut;
-
-	/* BUTTON config */
-	GpioBut.pGPIOx = GPIOB;
-	GpioBut.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
-	GpioBut.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
-	GpioBut.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_LOW;
-	GpioBut.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
 	GPIO_PeriClockControl(GPIOB, ENABLE);
 
-	GPIO_Init(&GpioBut);
+	/* SCLK Init */
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+	GPIO_Init(&SPIPins);
 
-	/* Enabling SPI1 peripheral */
-	SPI_PeriClockControl(SPI1, ENABLE);
+	/* MOSI Init */
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_15;
+	GPIO_Init(&SPIPins);
 
-	// This function is used to initialize the GPIO pins to behave as SPI1 pins
-	SPI1_GPIOInits();
+	/* MISO Init */
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
+	GPIO_Init(&SPIPins);
 
-	// This function is used to initialize the SPI1 peripheral parameters
-	SPI1_Inits();
+	/* NSS Init */
+	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	GPIO_Init(&SPIPins);
+
+}
+
+
+void SPI2_Inits(void){
+
+	SPI2Handle.pSPIx = SPI2;
+	SPI2Handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
+	SPI2Handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
+	SPI2Handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV8; //2MHz
+	SPI2Handle.SPIConfig.SPI_DFF = SPI_DFF_8BITS;
+	SPI2Handle.SPIConfig.SPI_CPOL = SPI_CPOL_LOW;
+	SPI2Handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
+	SPI2Handle.SPIConfig.SPI_SSM = SPI_SSM_DI; //HW Slave management enabled for NSS pin
+
+	SPI_PeriClockControl(SPI2, ENABLE);
+
+	SPI_Init(&SPI2Handle);
+}
+
+
+void GPIO_ButtonInit(void){
+	GPIO_Handle_t GpioBtn;
+
+	GpioBtn.pGPIOx = GPIOC;
+	GpioBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
+	GpioBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+	GpioBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GpioBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_PeriClockControl(GPIOC, ENABLE);
+
+	GPIO_Init(&GpioBtn);
+}
+
+
+void delay(void){
+	for(uint32_t i = 0; i < 500000/2; i++);
+}
+
+
+uint8_t SPI_VerifyResponse(uint8_t ackByte){
+
+	if(ackByte == 0xF5){
+		return 1;
+	}
+
+	return 0;
+}
+
+
+int main(void){
+	/* Initialize button */
+	GPIO_ButtonInit();
+
+	/* Initialize GPIO pins to behave as SPI2 pins */
+	SPI2_GPIOInits();
+
+	/* Initialize SPI2 peripheral parameters */
+	SPI2_Inits();
 
 	/* SPI2 IRQ configurations */
-
-	SPI_IRQInterruptConfig(IRQ_NO_SPI1, ENABLE);
+	SPI_IRQInterruptConfig(IRQ_NO_SPI2,ENABLE);
 
 	/*
-	* Making SSOE 1 does NSS output enable.
+	* making SSOE 1 does NSS output enable.
 	* The NSS pin is automatically managed by the hardware.
 	* i.e when SPE=1 , NSS will be pulled to low
 	* and NSS pin will be high when SPE=0
 	*/
-	SPI_SSOEConfig(SPI1, ENABLE);
+	SPI_SSOEConfig(SPI2,ENABLE);
 
-	//wait till button is pressed
-	while(GPIO_ReadFromInputPin(GPIOB,GPIO_PIN_NO_12));
+	while(1){
+		/* Wait till button is pressed */
+		while( GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_NO_13) );
 
-	//to avoid button de-bouncing related issues 200ms of delay
-	delay();
+		//printf("SPI communication started!\n");
 
-	// Enable the SPI1 peripheral after have done all register configurations
-	SPI_PeripheralControl(SPI1, ENABLE);
+		/* 200ms delay */
+		delay();
 
-	//first send length information
-	//uint8_t dataLen = strlen(user_data);
-	//SPI_SendData(SPI1, &dataLen, 1);
-	while(SPI_SendDataIT(&SPI1Handle, &data, 1) != SPI_READY);
+		/* Enable SPI2 peripheral */
+		SPI_PeripheralControl(SPI2, ENABLE);
 
-	// Send data
-	//while(SPI_SendDataIT(&SPI1Handle, (uint8_t*)user_data, strlen(user_data)) != SPI_READY);
-	//SPI_SendData(SPI1, (uint8_t*)user_data, strlen(user_data));
+		/* Send SPI data: CMD LED Control */
+		uint8_t commandCode = COMMAND_LED_CTRL;
 
-	//lets confirm SPI is not busy
-	while(SPI_GetFlagStatus(SPI1, SPI_BUSY_FLAG));
+		/* Send command */
+		while(SPI_SendDataIT(&SPI2Handle, &commandCode, 1) != SPI_READY);
 
-	// Disable the SPI1 peripheral
-	SPI_PeripheralControl(SPI1, DISABLE);
+		/* Dummy read to clear off the RXNE */
+		while(SPI_ReceiveDataIT(&SPI2Handle, &dummyRead, 1) != SPI_READY);
 
+		/* Send dummy bits (byte) to fetch the response from slave */
+		while(SPI_SendDataIT(&SPI2Handle, &dummyWrite, 1) != SPI_READY);
+
+		/* Receive Acknowledgment byte */
+		uint8_t ackByte;
+		while(SPI_ReceiveDataIT(&SPI2Handle, &ackByte, 1) != SPI_READY);
+
+		/* Verify response from SPI slave */
+		uint8_t args[2];
+		if(SPI_VerifyResponse(ackByte)){
+			/* Send arguments */
+			args[0] = LED_PIN;
+			args[1] = LED_ON;
+			while(SPI_SendDataIT(&SPI2Handle, args, 2) != SPI_READY);
+			//printf("Command LED executed!\n");
+		}
+		/* End of CMD LED Control */
+
+		/* Send SPI data: CMD Sensor Read */
+		commandCode = COMMAND_SENSOR_READ;
+
+		/* Send command */
+		while(SPI_SendDataIT(&SPI2Handle, &commandCode, 1) != SPI_READY);
+
+		/* Dummy read to clear off the RXNE */
+		while(SPI_ReceiveDataIT(&SPI2Handle, &dummyRead, 1) != SPI_READY);
+
+		/* Send dummy bits (byte) to fetch the response from slave */
+		while(SPI_SendDataIT(&SPI2Handle, &dummyWrite, 1) != SPI_READY);
+
+		/* Receive Acknowledgment byte */
+		while(SPI_ReceiveDataIT(&SPI2Handle, &ackByte, 1) != SPI_READY);
+
+		/* Verify response from SPI slave */
+		if(SPI_VerifyResponse(ackByte)){
+			/* Send arguments */
+			args[0] = ANALOG_PIN0;
+			while(SPI_SendDataIT(&SPI2Handle, args, 1) != SPI_READY);
+			//printf("Command Sensor Read executed!\n");
+
+			/* Dummy read to clear off the RXNE */
+			while(SPI_ReceiveDataIT(&SPI2Handle, &dummyRead, 1) != SPI_READY);
+
+			/* Send dummy bits (byte) to fetch the response from slave */
+			while(SPI_SendDataIT(&SPI2Handle, &dummyWrite, 1) != SPI_READY);
+
+			/* Wait for Slave to be ready with data */
+			delay();
+
+			/* Receive Sensor Data from Slave */
+			uint8_t analogRead;
+			while(SPI_ReceiveDataIT(&SPI2Handle, &analogRead, 1) != SPI_READY);
+			//printf("Analog read value: %d\n",analogRead);
+		}
+		/* End of CMD Sensor Read */
+
+		/* Confirm SPI2 not busy */
+		SPI_GetFlagStatus(SPI2, SPI_SR_BSY);
+
+		/* Disable SPI2 peripheral */
+		SPI_PeripheralControl(SPI2, DISABLE);
+
+		//printf("SPI communication closed!\n");
+	}
 }
+
 

@@ -50,26 +50,6 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi){
 	}
 }
 
-void teste(void){
-
-	/* LED config */
-
-	GPIO_Handle_t GpioLed;
-	GpioLed.pGPIOx = GPIOA;
-	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
-	GpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
-	GpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_LOW;
-	GpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
-	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
-
-	GPIO_PeriClockControl(GPIOA, ENABLE);
-
-	GPIO_Init(&GpioLed);
-
-	//GPIO_ToggleOutputPin(GPIOA, GPIO_PIN_NO_14);
-	GPIO_WriteToOutputPin(GPIOA, GPIO_PIN_NO_14, HIGH);
-}
-
 /*****************************************************************************************
  * @fn				- SPI_Init
  *
@@ -207,6 +187,7 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Lenght){
 			Lenght--;								/* Decrement 2 bytes */
 			(uint16_t*)pTxBuffer++;					/* Increment the adress pointer to the next data */
 		} else{
+
 			/* 8 bit DFF */
 			pSPIx->DR = *(pTxBuffer);
 			Lenght--;						/* Decrement 1 byte */
@@ -230,25 +211,26 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Lenght){
  * 					  -	The function will wait until all the bytes are transmitted;
  * 					  - The Rx buffer is only acessible through the Data Register (DR).
  *****************************************************************************************/
-void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Lenght){
+void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len){
 
-	while(Lenght > 0){
+	while(Len > 0){
 		//1. wait until RXNE is set
-		while(SPI_GetFlagStatus(pSPIx, SPI_RXNE_FLAG) == (uint8_t)FLAG_RESET);
+		while(SPI_GetFlagStatus(pSPIx,SPI_RXNE_FLAG)  == (uint8_t)FLAG_RESET );
 
 		//2. check the DFF bit in CR1
-		if((pSPIx->CR1 & (1 << SPI_CR1_DFF))){
+		if((pSPIx->CR1 & ( 1 << SPI_CR1_DFF))){
 
 			//16 bit DFF
 			//1. load the data from DR to Rxbuffer address
-			*((uint16_t*)pRxBuffer) = pSPIx->DR ;
-			Lenght--;
-			Lenght--;
+			 *((uint16_t*)pRxBuffer) = pSPIx->DR ;
+			Len--;
+			Len--;
 			(uint16_t*)pRxBuffer++;
+
 		} else{
 			//8 bit DFF
-			*(pRxBuffer) = pSPIx->DR;
-			Lenght--;
+			*(pRxBuffer) = pSPIx->DR ;
+			Len--;
 			pRxBuffer++;
 		}
 	}
@@ -282,6 +264,7 @@ uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pTxBuffer, uint32_t Le
 		pSPIHandle->TxState = SPI_BUSY_IN_TX;
 
 		/*3. Enable TXEIE control bit to get interrupt whenever TXE flag is set in SR */
+
 		pSPIHandle->pSPIx->CR2 |= (1 << SPI_CR2_TXEIE);
 
 	}
@@ -352,11 +335,11 @@ void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi){
 		} else if(IRQNumber > 31 && IRQNumber < 64){	/* IRQ numbers(range): 32, ... , 63 */
 			//program ISER1 register
 
-			*NVIC_ISER1 |= (1 << IRQNumber % 32);
+			*NVIC_ISER1 |= (1 << (IRQNumber % 32));
 
 		} else if(IRQNumber >= 64 && IRQNumber < 96){	/* IRQ numbers(range): 64, ... , 95 */
 			//program ISER2 register
-			*NVIC_ISER2 |= (1 << IRQNumber % 64);
+			*NVIC_ISER2 |= (1 << (IRQNumber % 64));
 		}
 	} else{
 
@@ -414,10 +397,10 @@ void SPI_IRQPriorityConfig(uint8_t IRQNumber,uint32_t IRQPriority){
  *****************************************************************/
 void SPI_IRQHandling(SPI_Handle_t *pHandle){
 
-	uint8_t temp1;
-	uint8_t temp2;
+	uint8_t temp1, temp2;
 
 	/* Check for TXE */
+
 	temp1 = pHandle->pSPIx->SR & (1 << SPI_SR_TXE);
 	temp2 = pHandle->pSPIx->CR2 & (1 << SPI_CR2_TXEIE);
 
@@ -623,6 +606,7 @@ static void spi_txe_interrupt_handle(SPI_Handle_t *pSPIHandle){
 		pSPIHandle->TxLen--;
 		(uint16_t*)pSPIHandle->pTxBuffer++;
 	} else{
+
 		/* 8 bit */
 		pSPIHandle->pSPIx->DR = *pSPIHandle->pTxBuffer;
 		pSPIHandle->TxLen--;
