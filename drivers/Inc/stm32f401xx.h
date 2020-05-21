@@ -193,16 +193,16 @@ typedef struct
  */
 typedef struct
 {
-  __vo uint32_t CR1;        /*     										Address offset: 0x00 */
-  __vo uint32_t CR2;        /*   										Address offset: 0x04 */
-  __vo uint32_t OAR1;       /*    										Address offset: 0x08 */
-  __vo uint32_t OAR2;       /*    										Address offset: 0x0C */
-  __vo uint32_t DR;         /* 											Address offset: 0x10 */
-  __vo uint32_t SR1;        /*   										Address offset: 0x14 */
-  __vo uint32_t SR2;        /*   										Address offset: 0x18 */
-  __vo uint32_t CCR;        /*   										Address offset: 0x1C */
-  __vo uint32_t TRISE;      /*    										Address offset: 0x20 */
-  __vo uint32_t FLTR;       /*   										Address offset: 0x24 */
+  __vo uint32_t CR1;        /* I2C Control register 1,     							Address offset: 0x00 */
+  __vo uint32_t CR2;        /* I2C Control register 2,  							Address offset: 0x04 */
+  __vo uint32_t OAR1;       /* I2C Own address register 1,   						Address offset: 0x08 */
+  __vo uint32_t OAR2;       /* I2C Own address register 2,   						Address offset: 0x0C */
+  __vo uint32_t DR;         /* I2C Data register, 									Address offset: 0x10 */
+  __vo uint32_t SR1;        /* I2C Status register 1,  								Address offset: 0x14 */
+  __vo uint32_t SR2;        /* I2C Status register 2,  								Address offset: 0x18 */
+  __vo uint32_t CCR;        /* I2C Clock control register,  						Address offset: 0x1C */
+  __vo uint32_t TRISE;      /* I2C TRISE register,   								Address offset: 0x20 */
+  __vo uint32_t FLTR;       /* I2C FLTR register,  									Address offset: 0x24 */
 }I2C_RegDef_t;
 
 /*
@@ -283,6 +283,13 @@ typedef struct
 #define GPIOD_REG_RESET()       do{ (RCC->AHB1RSTR |= (1 << 3)); (RCC->AHB1RSTR &= ~(1 << 3)); }while(0)
 #define GPIOE_REG_RESET()       do{ (RCC->AHB1RSTR |= (1 << 4)); (RCC->AHB1RSTR &= ~(1 << 4)); }while(0)
 #define GPIOH_REG_RESET()       do{ (RCC->AHB1RSTR |= (1 << 7)); (RCC->AHB1RSTR &= ~(1 << 7)); }while(0)
+
+/*
+ * Macros to reset I2Cx peripherals
+ */
+#define I2C1_REG_RESET()	do{ (RCC->APB1RSTR |= (1 << 21)); (RCC->APB1RSTR &= ~(1 << 21)); }while(0)
+#define I2C2_REG_RESET()	do{ (RCC->APB1RSTR |= (1 << 22)); (RCC->APB1RSTR &= ~(1 << 22)); }while(0)
+#define I2C3_REG_RESET()	do{ (RCC->APB1RSTR |= (1 << 23)); (RCC->APB1RSTR &= ~(1 << 23)); }while(0)
 
 /*
  * This macro returns a code(between 0 to 7) for a given GPIO base address(x)
