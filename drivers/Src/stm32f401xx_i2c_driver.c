@@ -245,6 +245,33 @@ void I2C_Init(I2C_Handle_t *pI2CHandle){
 		tempreg |= (ccr_value & 0xFFF);
 	}
 
+	pI2CHandle->pI2Cx->CCR = tempreg;
+
+	//TRISE Configuration
+	if(pI2CHandle->I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_SM){
+
+		/* Rise time of both SDA and SCL signals (Standard-mode)
+		 * Maximum rise time: 1000 ns or 1 us
+		 * */
+
+		/* TRISE = (T_rise / T_pclk1) + 1
+		 * TRISE = (T_rise * F_pclk1) + 1 */
+
+		tempreg = (RCC_GetPCLK1Value() / 1000000U) + 1 ;
+
+	} else{
+		/* Rise time of both SDA and SCL signals (Standard-mode)
+		 * Maximum rise time: 300 ns or 300 us
+		 * */
+
+		/* TRISE = (T_rise / T_pclk1) + 1
+		 * TRISE = (T_rise * F_pclk1) + 1 */
+
+		tempreg = ((RCC_GetPCLK1Value() * 300) / 1000000000U) + 1;
+	}
+
+	pI2CHandle->pI2Cx->TRISE = (tempreg & 0x3F);
+
 }
 
 /*****************************************************************
@@ -311,6 +338,7 @@ void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Le
 
 	// 1. Generate the START condition
 	I2C_GenerateStartCondition(pI2CHandle->pI2Cx);
+
 	//2. confirm that start generation is completed by checking the SB flag in the SR1
 	//   Note: Until SB is cleared SCL will be stretched (pulled to LOW)
 	while(! I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_FLAG_SB));
