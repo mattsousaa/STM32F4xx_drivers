@@ -241,9 +241,9 @@ typedef struct
 #define SPI3		((SPI_RegDef_t*) SPI3_BASEADDR)				/* Base address typecasted to SPI_RegDef_t SPI3 */
 #define SPI4		((SPI_RegDef_t*) SPI4_BASEADDR)				/* Base address typecasted to SPI_RegDef_t SPI4 */
 
-#define I2C1  		((I2C_RegDef_t*)I2C1_BASEADDR)
-#define I2C2  		((I2C_RegDef_t*)I2C2_BASEADDR)
-#define I2C3  		((I2C_RegDef_t*)I2C3_BASEADDR)
+#define I2C1  		((I2C_RegDef_t*) I2C1_BASEADDR)
+#define I2C2  		((I2C_RegDef_t*) I2C2_BASEADDR)
+#define I2C3  		((I2C_RegDef_t*) I2C3_BASEADDR)
 
 
 /*
