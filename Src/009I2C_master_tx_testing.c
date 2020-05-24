@@ -105,6 +105,7 @@ int main(void){
 
 		//send some data to the slave
 		I2C_MasterSendData(&I2C3Handle, some_data, strlen((char*)some_data), SLAVE_ADDR);
+
 	}
 }
 
