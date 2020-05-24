@@ -2,4 +2,4 @@
 010i2c_master_rx_testing.c:32:6:I2C1_GPIOInits	24	static
 010i2c_master_rx_testing.c:53:6:I2C1_Inits	8	static
 010i2c_master_rx_testing.c:65:6:GPIO_ButtonInit	24	static
-010i2c_master_rx_testing.c:80:5:main	16	static
+010i2c_master_rx_testing.c:80:5:main	24	static
