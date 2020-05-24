@@ -435,7 +435,7 @@ void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t
 					I2C_GenerateStopCondition(pI2CHandle->pI2Cx);
 			}
 
-			//read the data from data register in to buffer
+			//read the data from data register into buffer
 			*pRxBuffer = pI2CHandle->pI2Cx->DR;
 
 			//increment the buffer address
