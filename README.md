@@ -10,14 +10,13 @@ For this assignments [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucl
 Src folder contains tests, which covers every major implementation (GPIO, I2C, SPI, USART, IRQs)
 The folder structure is described as follows:
 
-<center>
 |                 |Files                            |Description                  |
 |----------------|---------------------------------|-----------------------------|
 |**/src**	 |`".c"` files		   	   |Application Layer|
 |**/drivers**    |Include and source files  	   |Driver Layer |
 |**/drivers/inc**|`"stm32f401xx.h"` <br> `"stm32f401xx_gpio_driver.h"`<br> `"stm32f401xx_i2c_driver.h"` <br> `"stm32f401xx_spi_driver.h"`|-- MCU Specific Header File <br> -- GPIO Header File <br> -- I2C Header File <br> -- SPI Header File |
 |**/drivers/src**|`"stm32f401xx_gpio_driver.c"` <br> `"stm32f401xx_i2c_driver.c"` <br> `"stm32f401xx_spi_driver.c"`|		   -- MCU Specific Header File <br> -- GPIO Header File <br> -- I2C Header File <br> -- SPI Header File |
-</center>
+
 
 ## Setup Installation - Ubuntu 18.04
 * ##### GCC Toolchain installation (v7.5.0)
