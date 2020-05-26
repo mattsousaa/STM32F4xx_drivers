@@ -15,7 +15,7 @@ The folder structure is described as follows:
 |**/src**	 |`".c"` files		   	   |Application Layer|
 |**/drivers**    |Include and source files  	   |Driver Layer |
 |**/drivers/inc**|`"stm32f401xx.h"` <br> `"stm32f401xx_gpio_driver.h"`<br> `"stm32f401xx_i2c_driver.h"` <br> `"stm32f401xx_spi_driver.h"`|-- MCU Specific Header File <br> -- GPIO Header File <br> -- I2C Header File <br> -- SPI Header File |
-|**/drivers/src**|`"stm32f401xx_gpio_driver.c"` <br> `"stm32f401xx_i2c_driver.c"` <br> `"stm32f401xx_spi_driver.c"`|		   -- GPIO Header File <br> -- I2C Header File <br> -- SPI Header File |
+|**/drivers/src**|`"stm32f401xx_gpio_driver.c"` <br> `"stm32f401xx_i2c_driver.c"` <br> `"stm32f401xx_spi_driver.c"`|		   -- GPIO Source File <br> -- I2C Source File <br> -- SPI Source File |
 
 
 ## Setup Installation - Ubuntu 18.04
