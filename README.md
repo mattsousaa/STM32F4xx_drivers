@@ -12,7 +12,7 @@ The folder structure is described as follows:
 
 |                 |Files                            |Description                  |
 |----------------|---------------------------------|-----------------------------|
-|**/src**	 |`".c"` files		   	   |Application Layer|
+|**/src**	 |`"001led_toggle.c"` <br> `"002led_button.c"` <br> `"003HSI_Measurement.c"` <br> `"004Button_interrupt.c"` <br> `"005Spi_Tx.c"` <br> `"006spi_tx_only_avr.c"` <br> `"007spi_cmd_handling.c"` <br> `"008Spi_IRQ_avr.c"` <br> `"009I2C_master_tx_testing.c"` <br> `"010i2c_master_rx_testing.c"`		   	   |Application Layer|
 |**/drivers**    |Include and source files  	   |Driver Layer |
 |**/drivers/inc**|`"stm32f401xx.h"` <br> `"stm32f401xx_gpio_driver.h"`<br> `"stm32f401xx_i2c_driver.h"` <br> `"stm32f401xx_spi_driver.h"`|-- MCU Specific Header File <br> -- I2C Header File <br> -- SPI Header File |
 |**/drivers/src**|`"stm32f401xx_gpio_driver.c"` <br> `"stm32f401xx_i2c_driver.c"` <br> `"stm32f401xx_spi_driver.c"`|		   -- GPIO Source File <br> -- I2C Source File <br> -- SPI Source File |
