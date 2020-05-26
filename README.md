@@ -7,8 +7,15 @@ Lab assignments from [Udemy](https://www.udemy.com/share/100F3uBkcacF1XR3o=/?xre
 
 For this assignments [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f446re.html) board was used, but you can use code and adjust it according to your board.
 
-Src folder contains tests, which covers every major implementation (GPIO, I2C, SPI, USART, IRQ, ...)
-Inside Test folder, there are Arduino sketches which are used for communication testing.
+Src folder contains tests, which covers every major implementation (GPIO, I2C, SPI, USART, IRQs)
+The folder structure is described as follows:
+
+|                |Files                            |Description                  |
+|----------------|---------------------------------|-----------------------------|
+|**/src**	 |"`".c"` files" 		   |'Driver headers application layer'|
+|**/drivers**    |"`".h"` and `".c"` files"  	   |"It contains the hearders and sources files for each peripheral" |
+|**/drivers/inc**|"`".h"` files" 		   |-- 'Driver header layer application' |
+|**/drivers/src**|"`".c"` files"		   |-- 'Driver source layer application' |
 
 ## Setup Installation - Ubuntu 18.04
 * ##### GCC Toolchain installation (v7.5.0)
