@@ -12,10 +12,10 @@ The folder structure is described as follows:
 
 |                |Files                            |Description                  |
 |----------------|---------------------------------|-----------------------------|
-|**/src**	 |"`".c"` files" 		   |'Driver headers application layer'|
-|**/drivers**    |"`".h"` and `".c"` files"  	   |"It contains the hearders and sources files for each peripheral" |
-|**/drivers/inc**|"`".h"` files" 		   |-- 'Driver header layer application' |
-|**/drivers/src**|"`".c"` files"		   |-- 'Driver source layer application' |
+|**/src**	 |`".c"` files		   |Driver headers application layer|
+|**/drivers**    |`".h"` and `".c"` files  	   |It contains the hearders and sources files for each peripheral |
+|**/drivers/inc**|`".h"` files 		   |-- Driver header layer application |
+|**/drivers/src**|`".c"` files		   |-- Driver source layer application |
 
 ## Setup Installation - Ubuntu 18.04
 * ##### GCC Toolchain installation (v7.5.0)
