@@ -12,10 +12,10 @@ The folder structure is described as follows:
 
 |                |Files                            |Description                  |
 |----------------|---------------------------------|-----------------------------|
-|**/src**	 |`".c"` files		   |Driver headers application layer|
-|**/drivers**    |`".h"` and `".c"` files  	   |It contains the hearders and sources files for each peripheral |
+|**/src**	 |`".c"` files		   	   |Driver headers application layer|
+|**/drivers**    |Include and source files  	   |It contains the hearders and sources files for each peripheral |
 |**/drivers/inc**|`"stm32f401xx.h"` <br> `"stm32f401xx_gpio_driver.h"` <br> `"stm32f401xx_i2c_driver.h"` <br> `"stm32f401xx_spi_driver.h"` <br> `"stm32f401xx_spi_driver.h"`   |-- Driver header layer application |
-|**/drivers/src**|`".c"` files		   |-- Driver source layer application |
+|**/drivers/src**|`"stm32f401xx_gpio_driver.c"` <br> `"stm32f401xx_i2c_driver.c"` <br> `"stm32f401xx_spi_driver.c"` <br>		   |-- Driver source layer application |
 
 ## Setup Installation - Ubuntu 18.04
 * ##### GCC Toolchain installation (v7.5.0)
