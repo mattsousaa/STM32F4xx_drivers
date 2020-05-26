@@ -598,6 +598,8 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
 
 	//Interrupt handling for both master and slave mode of a device
 
+	teste();
+
 	uint32_t temp1, temp2, temp3;
 	temp1 = pI2CHandle->pI2Cx->CR2 & (1 << I2C_CR2_ITEVTEN);
 	temp2 = pI2CHandle->pI2Cx->CR2 & (1 << I2C_CR2_ITBUFEN);
@@ -722,6 +724,8 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
  *
  *****************************************************************/
 void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle){
+
+	teste();
 
 	uint32_t temp1, temp2;
 

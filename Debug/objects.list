@@ -1,4 +1,4 @@
-"Src/010i2c_master_rx_testing.o"
+"Src/011i2c_master_tx_testing_irq.o"
 "Startup/startup_stm32f401retx.o"
 "drivers/Src/stm32f401xx_gpio_driver.o"
 "drivers/Src/stm32f401xx_i2c_driver.o"

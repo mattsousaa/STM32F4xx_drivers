@@ -1,19 +1,22 @@
 /*
- * 010i2c_master_rx_testing.c
+ * 011i2c_master_tx_testing_irq.c
  *
- *  Created on: 23 de mai de 2020
+ *  Created on: 26 de mai de 2020
  *      Author: Mateus Sousa
- *
- *
  */
 
 #include <string.h>
 #include "stm32f401xx_gpio_driver.h"
 #include "stm32f401xx_i2c_driver.h"
 
-#define MY_ADDR 	0x61
+#define MY_ADDR 		0x61
 
-#define SLAVE_ADDR  0x68
+#define SLAVE_ADDR  	0x68
+
+//extern void initialise_monitor_handles();
+
+//Flag variable
+uint8_t rxComplt = RESET;
 
 void delay(void){
 	for(uint32_t i = 0 ; i < 500000/2; i++);
@@ -83,6 +86,10 @@ int main(void){
 
 	uint8_t len;
 
+	//initialise_monitor_handles();
+
+	//printf("Application is running\n");
+
 	GPIO_ButtonInit();
 
 	//i2c pin inits
@@ -90,6 +97,10 @@ int main(void){
 
 	//i2c peripheral configuration
 	I2C1_Inits();
+
+	//I2C IRQ configurations
+	I2C_IRQInterruptConfig(IRQ_NO_I2C1_EV, ENABLE);
+	I2C_IRQInterruptConfig(IRQ_NO_I2C1_ER, ENABLE);
 
 	//enable the i2c peripheral
 	I2C_PeripheralControl(I2C1, ENABLE);
@@ -105,18 +116,56 @@ int main(void){
 		delay();
 
 		commandcode = 0x51;
+		while(I2C_MasterSendDataIT(&I2C1Handle, &commandcode, 1, SLAVE_ADDR,I2C_ENABLE_SR) != I2C_READY);
 
-		I2C_MasterSendData(&I2C1Handle,&commandcode,1,SLAVE_ADDR,I2C_ENABLE_SR);
-
-		I2C_MasterReceiveData(&I2C1Handle, &len, 1, SLAVE_ADDR, I2C_ENABLE_SR);
+		while(I2C_MasterReceiveDataIT(&I2C1Handle, &len, 1, SLAVE_ADDR, I2C_ENABLE_SR) != I2C_READY);
 
 		commandcode = 0x52;
-		I2C_MasterSendData(&I2C1Handle, &commandcode, 1, SLAVE_ADDR, I2C_ENABLE_SR);
+		while(I2C_MasterSendDataIT(&I2C1Handle, &commandcode, 1, SLAVE_ADDR, I2C_ENABLE_SR) != I2C_READY);
 
-		I2C_MasterReceiveData(&I2C1Handle, rcv_buf, len, SLAVE_ADDR, I2C_DISABLE_SR);
+		while(I2C_MasterReceiveDataIT(&I2C1Handle, rcv_buf, len, SLAVE_ADDR, I2C_DISABLE_SR) != I2C_READY);
+
+		rxComplt = RESET;
+
+		//wait till rx completes
+	    while(rxComplt != SET){}
 
 		rcv_buf[len+1] = '\0';
 
+		//printf("Data : %s",rcv_buf);
+
+		rxComplt = RESET;
 	}
 }
+
+void I2C1_EV_IRQHandler(void){
+	I2C_EV_IRQHandling(&I2C1Handle);
+}
+
+
+void I2C1_ER_IRQHandler(void){
+	I2C_ER_IRQHandling(&I2C1Handle);
+}
+
+void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv){
+
+     if(AppEv == I2C_EV_TX_CMPLT){
+    	 //printf("Tx is completed\n");
+     } else if (AppEv == I2C_EV_RX_CMPLT){
+    	 //printf("Rx is completed\n");
+    	 rxComplt = SET;
+     } else if (AppEv == I2C_ERROR_AF){
+    	 //printf("Error : Ack failure\n");
+    	 //in master ack failure happens when slave fails to send ack for the byte
+    	 //sent from the master.
+    	 I2C_CloseSendData(pI2CHandle);
+
+    	 //generate the stop condition to release the bus
+    	 I2C_GenerateStopCondition(I2C1);
+
+    	 //Hang in infinite loop
+    	 while(1);
+     }
+}
+
 
