@@ -62,6 +62,13 @@ The folder structure is described as follows:
 Open *syscalls.c* file and paste following code bellow *Includes*
 
 ```c
+#define __vo volatile
+```
+
+```c
+/*
+ * peripheral register definition structure for GPIO
+ */
 typedef struct
 {
 	__vo uint32_t MODER;		/* GPIO port pull-up/pull-down register,		Address offset: 0x00 */
@@ -80,6 +87,9 @@ typedef struct
 &nbsp;
 
 ```c
+/*
+ * peripheral register definition structure for RCC
+ */
 typedef struct
 {
   __vo uint32_t CR;            /* RCC clock control register,					Address offset: 0x00 */
@@ -117,6 +127,22 @@ typedef struct
 ```
 
 &nbsp;
+
+```c
+/*
+ * peripheral register definition structure for EXTI
+ */
+typedef struct
+{
+	__vo uint32_t IMR;    /* Interrupt mask register,				Address offset: 0x00 */
+	__vo uint32_t EMR;    /* Event mask register,           			Address offset: 0x04 */
+	__vo uint32_t RTSR;   /* Rising trigger selection register,			Address offset: 0x08 */
+	__vo uint32_t FTSR;   /* Falling trigger selection register,			Address offset: 0x0C */
+	__vo uint32_t SWIER;  /* Software interrupt event register,			Address offset: 0x10 */
+	__vo uint32_t PR;     /* Pending register,                  			Address offset: 0x14 */
+
+}EXTI_RegDef_t;
+```
 
 &nbsp;
 ## Contributing 
