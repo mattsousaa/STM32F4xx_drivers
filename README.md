@@ -40,7 +40,7 @@ The folder structure is described as follows:
 * ##### *FPU* warning fix
     Right click on the project -> properties -> expand C/C++ build -> Settings -> Tool settings -> MCU settings
   * `Floating-point unit: None`
-  * `Floating-point ABI: Software implementation ( -mfloat-abi=soft )`
+  * `Floating-point ABI: Software implementation (-mfloat-abi=soft)`
 
 * ##### Installing GIT (v2.7.1)
   * Install Git using apt-get:\
@@ -57,6 +57,15 @@ The folder structure is described as follows:
   * Setup `GitFiend` and connect it with your repository
 
 &nbsp;
+
+## Setup Installation - Windows 10
+* ##### STM32Cube IDE installation (v1.3.0)
+* [Download installation for Linux](https://www.st.com/en/development-tools/stm32cubeide.html#get-software) (Windows Installer)
+* Download the software and install it following the instructions.
+
 ## Contributing 
 
-Pull requests are welcome. If you discover any bug/issue feel free to report it.
+Pull requests are welcome. If you discover any bug/issue feel free to report it and let me now if you want to.
+
+## License
+[MIT](https://github.com/mattsousaa/STM32F4xx_drivers/blob/master/LICENSE)
