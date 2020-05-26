@@ -60,7 +60,7 @@ The folder structure is described as follows:
 
 ## Setup Installation - Windows 10
 * ##### STM32Cube IDE installation (v1.3.0)
-* [Download installation for Linux](https://www.st.com/en/development-tools/stm32cubeide.html#get-software) (Windows Installer)
+* [Download installation for Windows](https://www.st.com/en/development-tools/stm32cubeide.html#get-software) (Windows Installer)
 * Download the software and install it following the instructions.
 
 ## Contributing 
