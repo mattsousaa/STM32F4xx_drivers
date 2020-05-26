@@ -65,7 +65,7 @@ The folder structure is described as follows:
 
 ## Contributing 
 
-Pull requests are welcome. If you discover any bug/issue feel free to report it and let me now if you want to.
+Pull requests are welcome. If you discover any bug/issue feel free to report it and let me know if you want to.
 
 ## License
 [MIT](https://github.com/mattsousaa/STM32F4xx_drivers/blob/master/LICENSE)
