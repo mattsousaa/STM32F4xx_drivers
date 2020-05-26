@@ -7,7 +7,7 @@ Lab assignments from [Udemy](https://www.udemy.com/share/100F3uBkcacF1XR3o=/?xre
 
 For this assignments [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f446re.html) board was used, but you can use code and adjust it according to your board.
 
-Src folder contains tests, which covers every major implementation (GPIO, I2C, SPI, USART, IRQs)
+Src folder contains tests, which covers every major implementation (GPIO, I2C, SPI, USART, IRQs).
 The folder structure is described as follows:
 
 |                 |Files                            |Description                  |
