@@ -594,6 +594,77 @@ uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, ui
 	return busystate;
 }
 
+/*****************************************************************
+ * @fn			- I2C_SlaveSendData
+ *
+ * @brief		- This function sends data in I2C Slave mode
+ *
+ * @param[in]	- Base address of the I2C peripheral
+ * @param[in]	- Data
+ *
+ * @return		- Flag status (True/False)
+ *
+ * @Note		- None
+ *
+ *****************************************************************/
+void I2C_SlaveSendData(I2C_RegDef_t *pI2C, uint8_t data){
+	pI2C->DR = data;
+}
+
+/*****************************************************************
+ * @fn			- I2C_SlaveReceiveData
+ *
+ * @brief		- This function receives data in I2C Slave mode
+ *
+ * @param[in]	- Base address of the I2C peripheral
+ * @param[in]	- Data
+ *
+ * @return		- Flag status (True/False)
+ *
+ * @Note		- None
+ *
+ *****************************************************************/
+uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C){
+    return (uint8_t) pI2C->DR;
+}
+
+/*****************************************************************
+ * @fn			- I2C_SlaveEnableDisableCallbackEvents
+ *
+ * @brief		- Generate stop condition for I2C
+ *
+ * @param[in]	- Base address of the I2C peripheral
+ *
+ * @return		- None
+ *
+ * @Note		- None
+ *
+ *****************************************************************/
+void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx, uint8_t EnorDi){
+
+	 if(EnorDi == ENABLE){
+			pI2Cx->CR2 |= (1 << I2C_CR2_ITEVTEN);
+			pI2Cx->CR2 |= (1 << I2C_CR2_ITBUFEN);
+			pI2Cx->CR2 |= (1 << I2C_CR2_ITERREN);
+	 } else{
+			pI2Cx->CR2 &= ~(1 << I2C_CR2_ITEVTEN);
+			pI2Cx->CR2 &= ~(1 << I2C_CR2_ITBUFEN);
+			pI2Cx->CR2 &= ~(1 << I2C_CR2_ITERREN);
+	 }
+}
+
+/*****************************************************************
+ * @fn			- I2C_EV_IRQHandling
+ *
+ * @brief		- Interrupt handling for different I2C events
+ *
+ * @param[in]	- Pointer to I2C Handle structure
+ *
+ * @return		- None
+ *
+ * @Note		- None
+ *
+ *****************************************************************/
 void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
 
 	//Interrupt handling for both master and slave mode of a device
@@ -710,6 +781,7 @@ void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle){
 		}
 	}
 }
+
 
 /*****************************************************************
  * @fn			- I2C_ER_IRQHandling
