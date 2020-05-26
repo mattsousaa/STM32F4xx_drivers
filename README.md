@@ -11,7 +11,7 @@ Src folder contains tests, which covers every major implementation (GPIO, I2C, S
 The folder structure is described as follows:
 
 <center>
-                 |Files                            |Description                  |
+|                 |Files                            |Description                  |
 |----------------|---------------------------------|-----------------------------|
 |**/src**	 |`".c"` files		   	   |Application Layer|
 |**/drivers**    |Include and source files  	   |Driver Layer |
