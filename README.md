@@ -10,7 +10,7 @@ For this assignments [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucl
 Src folder contains tests, which covers every major implementation (GPIO, I2C, SPI, USART, IRQs) is the Application Layer.
 The folder structure is described as follows:
 
-|                 |Files                            |Description                  |
+| Folders        |Files                            |Description                  |
 |----------------|---------------------------------|-----------------------------|
 |**/src**	 |`"001led_toggle.c"` <br> `"002led_button.c"` <br> `"003HSI_Measurement.c"` <br> `"004Button_interrupt.c"` <br> `"005Spi_Tx.c"` <br> `"006spi_tx_only_avr.c"` <br> `"007spi_cmd_handling.c"` <br> `"008Spi_IRQ_avr.c"` <br> `"009I2C_master_tx_testing.c"` <br> `"010i2c_master_rx_testing.c"`		   	   |-- Led Toggle Application <br> -- Led/Button Application <br> -- Measuring Internal Clock Application <br> -- Interrupt Button Application <br> -- SPI transmission test Application <br> -- SPI Transmission Only Application <br> -- SPI Command Application <br> -- SPI and AVR Application <br> -- I2C master testing Application <br> -- I2C master reception Application |
 |**/drivers**    |Include and source files  	   |Driver Layer |
