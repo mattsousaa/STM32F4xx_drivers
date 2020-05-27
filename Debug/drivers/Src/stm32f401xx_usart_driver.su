@@ -1,0 +1,4 @@
+stm32f401xx_usart_driver.c:23:6:USART_PeripheralControl	16	static
+stm32f401xx_usart_driver.c:45:6:USART_PeriClockControl	16	static
+stm32f401xx_usart_driver.c:71:9:USART_GetFlagStatus	16	static
+stm32f401xx_usart_driver.c:94:6:USART_Init	24	static
