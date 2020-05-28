@@ -98,6 +98,31 @@ typedef struct
 #define USART_HW_FLOW_CTRL_RTS    			2
 #define USART_HW_FLOW_CTRL_CTS_RTS			3
 
+/*
+ * USART flags
+ */
+
+#define USART_FLAG_TXE 			(1 << USART_SR_TXE)
+#define USART_FLAG_RXNE 		(1 << USART_SR_RXNE)
+#define USART_FLAG_TC 			(1 << USART_SR_TC)
+
+/*
+ * Application states
+ */
+#define USART_BUSY_IN_RX 			1
+#define USART_BUSY_IN_TX 			2
+#define USART_READY 				0
+
+
+#define USART_EVENT_TX_CMPLT   		0
+#define	USART_EVENT_RX_CMPLT   		1
+#define	USART_EVENT_IDLE      		2
+#define	USART_EVENT_CTS       		3
+#define	USART_EVENT_PE        		4
+#define	USART_ERR_FE     			5
+#define	USART_ERR_NE    	 		6
+#define	USART_ERR_ORE    			7
+
 /******************************************************************************************
  *							APIs supported by this driver
  *		 For more information about the APIs check the function definitions
@@ -113,7 +138,7 @@ void USART_PeriClockControl(USART_RegDef_t *pUSARTx, uint8_t EnOrDi);
  * Init and De-init
  */
 void USART_Init(USART_Handle_t *pUSARTHandle);
-void USART_DeInit(USART_Handle_t *pUSARTHandle);
+void USART_DeInit(USART_RegDef_t *pUSARTx);
 
 /*
  * Data Send and Receive
@@ -133,17 +158,14 @@ void USART_IRQHandling(USART_Handle_t *pUSARTHandle);
 /*
  * Other Peripheral Control APIs
  */
-
 uint8_t USART_GetFlagStatus(USART_RegDef_t *pUSARTx, uint8_t StatusFlagName);
 void USART_ClearFlag(USART_RegDef_t *pUSARTx, uint16_t StatusFlagName);
 void USART_PeripheralControl(USART_RegDef_t *pUSARTx, uint8_t EnOrDi);
 void USART_SetBaudRate(USART_RegDef_t *pUSARTx, uint32_t BaudRate);
 
-
 /*
  * Application Callbacks
  */
 void USART_ApplicationEventCallback(USART_Handle_t *pUSARTHandle,uint8_t ApEv);
-
 
 #endif /* INC_STM32F401XX_USART_DRIVER_H_ */

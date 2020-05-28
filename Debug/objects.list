@@ -1,6 +1,7 @@
-"Src/013i2c_slave_tx_string2.o"
+"Src/0014uart_tx.o"
 "Startup/startup_stm32f401retx.o"
 "drivers/Src/stm32f401xx_gpio_driver.o"
 "drivers/Src/stm32f401xx_i2c_driver.o"
+"drivers/Src/stm32f401xx_rcc_driver.o"
 "drivers/Src/stm32f401xx_spi_driver.o"
 "drivers/Src/stm32f401xx_usart_driver.o"
