@@ -1,5 +1,5 @@
 /*
- * 0014uart_tx.c
+ * 0014uart_tx_rx.c
  *
  *  Created on: 28 de mai de 2020
  *      Author: Mateus Sousa
@@ -12,7 +12,10 @@
 #include "stm32f401xx_gpio_driver.h"
 #include "stm32f401xx_usart_driver.h"
 
-char msg[1024] = "UART Tx testing...\n\r";
+char msg1[1024] = "UART Tx testing...\n\r";
+char msg2[1024] = "The message ended! \n\r";
+char rcv_buf[32];
+char rcv_print[32];
 
 USART_Handle_t usart2_handle;
 
@@ -87,7 +90,20 @@ int main(void){
    		//to avoid button de-bouncing related issues 200ms of delay
    		delay();
 
-   		USART_SendData(&usart2_handle,(uint8_t*)msg, strlen(msg));
+   		USART_SendData(&usart2_handle,(uint8_t*)msg1, strlen(msg1));
+
+   		uint8_t i = 0;
+
+   		do{
+   			USART_ReceiveData(&usart2_handle, (uint8_t*)rcv_buf, 1);
+   			rcv_print[i] = *rcv_buf;
+   			i++;
+   		} while(*rcv_buf != '\r');
+
+   		rcv_print[i+1] = '\0';
+
+   		USART_SendData(&usart2_handle, (uint8_t*)msg2, strlen(msg2));
+   		USART_SendData(&usart2_handle, (uint8_t*)rcv_print, strlen(rcv_print));
 
       }
 }
