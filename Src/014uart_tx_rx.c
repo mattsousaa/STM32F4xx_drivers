@@ -1,5 +1,5 @@
 /*
- * 0014uart_tx_rx.c
+ * 014uart_tx_rx.c
  *
  *  Created on: 28 de mai de 2020
  *      Author: Mateus Sousa
@@ -105,7 +105,7 @@ int main(void){
    		USART_SendData(&usart2_handle, (uint8_t*)msg2, strlen(msg2));
    		USART_SendData(&usart2_handle, (uint8_t*)rcv_print, strlen(rcv_print));
 
-      }
+    }
 }
 
 

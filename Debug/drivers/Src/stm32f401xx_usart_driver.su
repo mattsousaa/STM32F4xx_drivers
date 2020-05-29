@@ -11,3 +11,5 @@ stm32f401xx_usart_driver.c:451:9:USART_ReceiveDataIT	32	static
 stm32f401xx_usart_driver.c:483:6:USART_ClearFlag	16	static
 stm32f401xx_usart_driver.c:505:6:USART_IRQInterruptConfig	16	static
 stm32f401xx_usart_driver.c:551:6:USART_IRQPriorityConfig	24	static
+stm32f401xx_usart_driver.c:576:6:USART_IRQHandling	32	static
+stm32f401xx_usart_driver.c:840:13:USART_ApplicationEventCallback	16	static
