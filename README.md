@@ -1,6 +1,6 @@
 ## STM32F4xx_drivers
 
-Drivers developed during course [MCU1](https://www.udemy.com/share/101rCkBkcacF1XR3o=/) by [FastBit Embedded Brain Academy](http://fastbitlab.com/). Contains source coude and drivers for all exercises done during course, tested and adjusted for [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f401re.html) board.
+Drivers developed during course [MCU1](https://www.udemy.com/share/101rCkBkcacF1XR3o=/) by [FastBit Embedded Brain Academy](http://fastbitlab.com/). Contains source coude and drivers for all exercises done during the course. All of these are tested and adjusted for [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f401re.html) board.
 
 
 ## Usage
