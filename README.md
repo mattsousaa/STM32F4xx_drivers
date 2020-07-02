@@ -5,7 +5,7 @@ Drivers developed during course [MCU1](https://www.udemy.com/share/101rCkBkcacF1
 
 ## Usage
 
-For this assignments [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f446re.html) board was used, but you can use code and adjust it according to your board.
+For this assignments [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f446re.html) board was used, but you can use the code and adjust it according to your board.
 
 Src folder contains tests, which covers every major implementation (GPIO, I2C, SPI, USART, IRQs) is the Application Layer.
 The folder structure is described as follows:
