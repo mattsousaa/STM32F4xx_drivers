@@ -10,7 +10,7 @@ For this assignments [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucl
 The src folder that contains the test files (which covers every major implementation like GPIO, I2C, SPI, USART and IRQs) is the Application Layer.
 The folder structure is described as follows:
 
-📦Src
+📦Src \
  ┣ 📜001led_toggle.c \
  ┣ 📜002led_button.c \
  ┣ 📜003HSI_Measurement.c
