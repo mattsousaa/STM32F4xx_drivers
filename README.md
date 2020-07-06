@@ -13,34 +13,34 @@ The folder structure is described as follows:
 📦Src \
  ┣ 📜001led_toggle.c \
  ┣ 📜002led_button.c \
- ┣ 📜003HSI_Measurement.c
- ┣ 📜004Button_interrupt.c
- ┣ 📜005Spi_Tx.c
- ┣ 📜006spi_tx_only_avr.c
- ┣ 📜007spi_cmd_handling.c
- ┣ 📜008Spi_IRQ_avr.c
- ┣ 📜009I2C_master_tx_testing.c
- ┣ 📜010i2c_master_rx_testing.c
- ┣ 📜011i2c_master_tx_testing_irq.c
- ┣ 📜012i2c_slave_tx_string.c
- ┣ 📜013i2c_slave_tx_string2.c
- ┣ 📜014uart_tx_rx.c
- ┗ 📜015uart_tx_rx_irq.c
+ ┣ 📜003HSI_Measurement.c \
+ ┣ 📜004Button_interrupt.c \
+ ┣ 📜005Spi_Tx.c \
+ ┣ 📜006spi_tx_only_avr.c \
+ ┣ 📜007spi_cmd_handling.c \
+ ┣ 📜008Spi_IRQ_avr.c \
+ ┣ 📜009I2C_master_tx_testing.c \
+ ┣ 📜010i2c_master_rx_testing.c \
+ ┣ 📜011i2c_master_tx_testing_irq.c \
+ ┣ 📜012i2c_slave_tx_string.c \
+ ┣ 📜013i2c_slave_tx_string2.c \
+ ┣ 📜014uart_tx_rx.c \
+ ┗ 📜015uart_tx_rx_irq.c \
 
-📦drivers
- ┣ 📂Inc
- ┃ ┣ 📜stm32f401xx.h
- ┃ ┣ 📜stm32f401xx_gpio_driver.h
- ┃ ┣ 📜stm32f401xx_i2c_driver.h
- ┃ ┣ 📜stm32f401xx_rcc_driver.h
- ┃ ┣ 📜stm32f401xx_spi_driver.h
- ┃ ┗ 📜stm32f401xx_usart_driver.h
- ┗ 📂Src
- ┃ ┣ 📜stm32f401xx_gpio_driver.c
- ┃ ┣ 📜stm32f401xx_i2c_driver.c
- ┃ ┣ 📜stm32f401xx_rcc_driver.c
- ┃ ┣ 📜stm32f401xx_spi_driver.c
- ┃ ┗ 📜stm32f401xx_usart_driver.c
+📦drivers \
+ ┣ 📂Inc \
+ ┃ ┣ 📜stm32f401xx.h \
+ ┃ ┣ 📜stm32f401xx_gpio_driver.h \
+ ┃ ┣ 📜stm32f401xx_i2c_driver.h \ 
+ ┃ ┣ 📜stm32f401xx_rcc_driver.h \
+ ┃ ┣ 📜stm32f401xx_spi_driver.h \
+ ┃ ┗ 📜stm32f401xx_usart_driver.h \
+ ┗ 📂Src \
+ ┃ ┣ 📜stm32f401xx_gpio_driver.c \
+ ┃ ┣ 📜stm32f401xx_i2c_driver.c \
+ ┃ ┣ 📜stm32f401xx_rcc_driver.c \
+ ┃ ┣ 📜stm32f401xx_spi_driver.c \
+ ┃ ┗ 📜stm32f401xx_usart_driver.c \
  
 | Folders        |Files                            |Description                  |
 |----------------|---------------------------------|-----------------------------|
