@@ -11,8 +11,8 @@ The src folder that contains the test files (which covers every major implementa
 The folder structure is described as follows:
 
 📦Src
- ┣ 📜001led_toggle.c
- ┣ 📜002led_button.c
+ ┣ 📜001led_toggle.c \
+ ┣ 📜002led_button.c \
  ┣ 📜003HSI_Measurement.c
  ┣ 📜004Button_interrupt.c
  ┣ 📜005Spi_Tx.c
