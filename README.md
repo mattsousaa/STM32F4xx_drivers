@@ -31,7 +31,7 @@ The folder structure is described as follows:
  ┣ 📂Inc \
  ┃ ┣ 📜stm32f401xx.h \
  ┃ ┣ 📜stm32f401xx_gpio_driver.h \
- ┃ ┣ 📜stm32f401xx_i2c_driver.h \ 
+ ┃ ┣ 📜stm32f401xx_i2c_driver.h  
  ┃ ┣ 📜stm32f401xx_rcc_driver.h \
  ┃ ┣ 📜stm32f401xx_spi_driver.h \
  ┃ ┗ 📜stm32f401xx_usart_driver.h \
