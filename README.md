@@ -40,7 +40,7 @@ The folder structure is described as follows:
  ┃ ┣ 📜stm32f401xx_i2c_driver.c \
  ┃ ┣ 📜stm32f401xx_rcc_driver.c \
  ┃ ┣ 📜stm32f401xx_spi_driver.c \
- ┃ ┗ 📜stm32f401xx_usart_driver.c \
+ ┃ ┗ 📜stm32f401xx_usart_driver.c 
  
  Below is the description of the tree folder template:
  
