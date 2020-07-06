@@ -25,7 +25,7 @@ The folder structure is described as follows:
  ┣ 📜012i2c_slave_tx_string.c \
  ┣ 📜013i2c_slave_tx_string2.c \
  ┣ 📜014uart_tx_rx.c \
- ┗ 📜015uart_tx_rx_irq.c \
+ ┗ 📜015uart_tx_rx_irq.c 
 
 📦drivers \
  ┣ 📂Inc \
@@ -40,7 +40,7 @@ The folder structure is described as follows:
  ┃ ┣ 📜stm32f401xx_i2c_driver.c \
  ┃ ┣ 📜stm32f401xx_rcc_driver.c \
  ┃ ┣ 📜stm32f401xx_spi_driver.c \
- ┃ ┗ 📜stm32f401xx_usart_driver.c \
+ ┃ ┗ 📜stm32f401xx_usart_driver.c 
  
 | Folders        |Files                            |Description                  |
 |----------------|---------------------------------|-----------------------------|
